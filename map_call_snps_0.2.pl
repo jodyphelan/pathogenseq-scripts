@@ -87,10 +87,10 @@ sub bwa_mapping{
 	print "Running BWA for $sample\n";
 	my $bwamem = "bwa mem -t $threads -c 100 -R '\@RG\\tID:$sample\\tSM:$sample\\tPL:Illumina' -M -T 50 ";
 	print "Mapping pairs...";
-	`$bwamem $ref ${sample}_1_trimmed_paired.txt ${sample}_2_trimmed_paired.txt 2>>$sample.log | sambamba view -t $threads -S -f bam /dev/stdin 2>>$sample.log | sambamba sort -o ${sample}_pair.sorted.bam -t $threads 2> $sample.log`;
+	`$bwamem $ref ${sample}_1_trimmed_paired.txt ${sample}_2_trimmed_paired.txt 2>>$sample.log | sambamba view -t $threads -S -f bam /dev/stdin 2>>$sample.log | sambamba sort -o ${sample}_pair.sorted.bam -t $threads /dev/stdin 2> $sample.log`;
 	print "Mapping unpaired\n";
-	`$bwamem $ref ${sample}_1_trimmed_unpaired.txt 2>> $sample.log | sambamba view -t $threads -S -f bam /dev/stdin 2>>$sample.log | sambamba sort -o ${sample}_single1.sorted.bam -t $threads 2> $sample.log`;
-	`$bwamem $ref ${sample}_2_trimmed_unpaired.txt 2>> $sample.log | sambamba view -t $threads -S -f bam /dev/stdin 2>>$sample.log | sambamba sort -o ${sample}_single2.sorted.bam -t $threads 2> $sample.log`;
+	`$bwamem $ref ${sample}_1_trimmed_unpaired.txt 2>> $sample.log | sambamba view -t $threads -S -f bam /dev/stdin 2>>$sample.log | sambamba sort -o ${sample}_single1.sorted.bam -t $threads /dev/stdin 2> $sample.log`;
+	`$bwamem $ref ${sample}_2_trimmed_unpaired.txt 2>> $sample.log | sambamba view -t $threads -S -f bam /dev/stdin 2>>$sample.log | sambamba sort -o ${sample}_single2.sorted.bam -t $threads /dev/stdin 2> $sample.log`;
 
 	`sambamba merge -t $threads ${sample}.bam ${sample}_pair.sorted.bam ${sample}_single1.sorted.bam ${sample}_single2.sorted.bam 2>> $sample.log`;
 
