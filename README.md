@@ -2,7 +2,7 @@
 
 ## Installation
 
-#### Prerequisites:
+#### Prerequisites.
 	java<br>
 	perl<br>
 	samtools<br>
