@@ -11,8 +11,8 @@
 	* bcftools<br>
 	* R<br>
 #### Perl modules:
-	Statistics::Lite<br>
-	Term::ProgresBar
+Statistics::Lite<br>
+Term::ProgresBar
 
 These programs and perl modules must be installed for full functionality of the pipeline. Additionally the following programs and scripts much also be added to the path, however we provide a script to download the latest versions:>
 	trimmomatic<br>
