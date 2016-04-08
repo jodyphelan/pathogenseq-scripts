@@ -20,4 +20,9 @@ These programs and perl modules must be installed for full functionality of the 
 	GEM-library<br>
 	bedops<br>
 
-To install please clone the repository:
+#### To install please follow these instructions:
+	git clone https://github.com/jodyphelan/pathogenseq-scripts.git
+	cd pathogenseq-scripts
+	bash downloadPrograms.sh
+	
+
