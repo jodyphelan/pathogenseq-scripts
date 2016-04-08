@@ -60,12 +60,12 @@ my $count = 0;
 my $mix = 0;
 my @totalCov;
 while(<F>){
-	$count++;
-	
+		
 	if ($x<1){$x++; next;}
 	my ($test1,$test2) = (split /\s+/,$_)[0,1];
 	$test2=$test2+1;
 	if (!exists($lhAll_pos{$test1}{$test2})){next;}
+	$count++;
 	my ($chr, $pos, $tot, $cov_A, $cov_C, $cov_G, $cov_T) = (split /\s+/,$_)[0,1,2,3,4,5,6,8];
 	$pos = $pos+1;
 	push @totalCov,$tot;
