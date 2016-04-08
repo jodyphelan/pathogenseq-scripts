@@ -3,13 +3,12 @@
 ## Installation
 
 #### Prerequisites:
-	
-	* java<br>
-	* perl<br>
-	* samtools<br>
-	* bwa<br>
-	* bcftools<br>
-	* R<br>
+* java<br>
+* perl<br>
+* samtools<br>
+* bwa<br>
+* bcftools<br>
+* R<br>
 #### Perl modules:
 Statistics::Lite<br>
 Term::ProgresBar
