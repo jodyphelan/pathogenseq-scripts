@@ -66,6 +66,9 @@ if ($ARGV[0] eq "trim"){
 #  Trimming reads
 #---------------------------------------------------------------------------
 sub trim{
+	my $script_dir = abs_path($0);
+	$script_dir =~ s/map_call_snps.pl//;
+	
 	my $sample = $_[0];	
 	my $threads = $_[1];
 	if (!-e "./fastq/${sample}_1.fastq.gz" or !-e "./fastq/${sample}_2.fastq.gz"){ print "Can't find ./fastq/${sample}_1.fastq.gz\n"; exit;}
