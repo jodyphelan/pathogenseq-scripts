@@ -102,7 +102,7 @@ sub bwa_mapping{
 	`mv $sample.sorted.bam $sample.bam`;
 	`sambamba index -t $threads $sample.bam 2>> $sample.log`;
 
-	`rm ${sample}_1_trimmed_paired.txt ${sample}_1_trimmed_unpaired.txt ${sample}_2_trimmed_paired.txt ${sample}_2_trimmed_unpaired.txt ${sample}_pair.sorted.bam ${sample}_single1.sorted.bam ${sample}_single2.sorted.bam ${sample}_pair.bam ${sample}_single1.bam ${sample}_single2.bam`;
+	`rm ${sample}_1_trimmed_paired.txt ${sample}_1_trimmed_unpaired.txt ${sample}_2_trimmed_paired.txt ${sample}_2_trimmed_unpaired.txt ${sample}_pair.sorted.bam ${sample}_single1.sorted.bam ${sample}_single2.sorted.bam `;
 	`samtools flagstat $sample.bam > $sample.stats.txt 2>> $sample.log`;
 }
 
@@ -235,8 +235,10 @@ sub pipeline{
 	my $read1 = abs_path("./fastq/${sample}_1.fastq.gz");
 	my $read2 = abs_path("./fastq/${sample}_2.fastq.gz");
 	chdir("$wd");
-	`ln -s $read1 fastq/`;
-	`ln -s $read2 fastq/`;
+	unless ($wd eq $sd){
+		`ln -s $read1 fastq/`;
+		`ln -s $read2 fastq/`;
+	}
 
 	trim($sample,$threads); 
 	bwa_mapping($sample,$ref,$threads);
