@@ -74,7 +74,7 @@ sub trim{
 	if (!-e "./fastq/${sample}_1.fastq.gz" or !-e "./fastq/${sample}_2.fastq.gz"){ print "Can't find ./fastq/${sample}_1.fastq.gz\n"; exit;}
 	if (-e  "${sample}_1_trimmed_paired.txt"){ print "Found trimmed reads\n"; exit;}
 	print "Running trimmomatic on $sample\n";
-	`java -jar /usr/local/bin/trimmomatic.jar PE -threads $threads -phred33 ./fastq/${sample}_1.fastq.gz ./fastq/${sample}_2.fastq.gz ${sample}_1_trimmed_paired.txt ${sample}_1_trimmed_unpaired.txt ${sample}_2_trimmed_paired.txt ${sample}_2_trimmed_unpaired.txt LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:36 2>> $sample.log`;
+	`java -jar $script_dir/trimmomatic.jar PE -threads $threads -phred33 ./fastq/${sample}_1.fastq.gz ./fastq/${sample}_2.fastq.gz ${sample}_1_trimmed_paired.txt ${sample}_1_trimmed_unpaired.txt ${sample}_2_trimmed_paired.txt ${sample}_2_trimmed_unpaired.txt LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20 MINLEN:36 2>> $sample.log`;
 
 }
 
