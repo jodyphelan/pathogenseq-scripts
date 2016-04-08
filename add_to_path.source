@@ -1,5 +1,5 @@
 #! /bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Adding $DIR to path"
-PATH=$DIR:$PATH
+PATH=$DIR:$DIR/bedops:$DIR/GEM-binaries-Linux-x86_64-core_i3-20130406-045632/bin/:$PATH
 
