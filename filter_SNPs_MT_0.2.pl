@@ -246,7 +246,8 @@ close TMP;
 if(!-d"temp"){
 	`mkdir temp`;
 }
-`mv xargs.txt *.qual *.calls temp`;
+`mv xargs.txt *.COV *.qual *.calls temp`;
+`mv temp/pop.COV .`;
 `rm tempMat.* samples.*`;
 ### SUB END ###
 }
