@@ -67,7 +67,7 @@ if ($ARGV[0] eq "trim"){
 #---------------------------------------------------------------------------
 sub trim{
 	my $script_dir = abs_path($0);
-	$script_dir =~ s/map_call_snps.pl//;
+	$script_dir =~ s/map_call_snps_0.2.pl//;
 	
 	my $sample = $_[0];	
 	my $threads = $_[1];
