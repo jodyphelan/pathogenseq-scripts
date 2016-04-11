@@ -36,6 +36,6 @@ To create a SNP matrix from the VCFs and coverage files we will use the `filter_
 
 | Option | Description |
 | ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
+| ref   | The reference fasta to use |
+| kmer | The size of the kmer to look for uniqueness (should be roughly the same as the read length) |
+| threads | Number of threads to use |
