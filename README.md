@@ -56,7 +56,7 @@ The main command requires a number of different parameters which will be used du
 | nuclear_chromosomes | The chromosomes which should use the total coverage filter |
 
 
-This will perform several filters on the dataset interactively. For each of these steps a graph plot will appear and ask you to set cut-off values. Please click (anywhere on the plot) at the corresponding value you would like to set the cut-off at using the indicated axis.<br>
+This will perform several filters on the dataset interactively. For each of these steps a graph plot will appear and ask you to set cut-off values. Please click (anywhere on the plot) at the corresponding value you would like to set the cut-off at using the indicated axis:<br>
 + Filtering samples with large number of missing or mixed calls and those with low median depth
 - A plot of the number of missing calls as a proportion of the total number of SNP positions. (Y-axis)
 - A plot of the number of mixed calls as a proportion of the total number of SNP positions (Y-axis)
