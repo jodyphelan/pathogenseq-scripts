@@ -7,7 +7,7 @@
 * perl<br>
 * samtools<br>
 * bwa<br>
-* bcftools<br>
+* vcftools<br>
 * R<br>
 
 #### Perl modules:
