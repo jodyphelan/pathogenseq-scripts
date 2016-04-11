@@ -71,7 +71,9 @@ filter_SNPs_MT.pl mappability <ref> <kmer> <threads>
 
 This will create a file named mappability.bed in the current directory which will feed into the pipeline. We will also be filtering based on the total coverage over all samples. Because non-nuclear DNA will have higher coverage we do not want to filter these based on the same cut-offs. We must give a file listing all the chromosomes (one per line) which we would like to apply this filtering to.
 The main command requires a number of different parameters which will be used during different stages in the filtering process: <br>
-	`filter_SNPs_MT.pl all <sample_file> <base_dir> <%cov> <min_cov> <threads> <samtools|gatk|both> <mappability_file> <nuclear_chromosomes>`
+```
+filter_SNPs_MT.pl all <sample_file> <base_dir> <%cov> <min_cov> <threads> <samtools|gatk|both> <mappability_file> <nuclear_chromosomes>
+```
 
 | Option | Description |
 | ------ | ----------- |
