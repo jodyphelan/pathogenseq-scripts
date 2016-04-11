@@ -58,12 +58,14 @@ The main command requires a number of different parameters which will be used du
 
 This will perform several filters on the dataset interactively. For each of these steps a graph plot will appear and ask you to set cut-off values. Please click (anywhere on the plot) at the corresponding value you would like to set the cut-off at using the indicated axis:<br>
 + Filtering samples with large number of missing or mixed calls and those with low median depth
-- A plot of the number of missing calls as a proportion of the total number of SNP positions. (Y-axis)
-- A plot of the number of mixed calls as a proportion of the total number of SNP positions (Y-axis)
-- A plot of the number of the median depth per sample (Y-axis)
+	- A plot of the number of missing calls as a proportion of the total number of SNP positions. (Y-axis)
+	- A plot of the number of mixed calls as a proportion of the total number of SNP positions (Y-axis)
+	- A plot of the number of the median depth per sample (Y-axis)
 + Filtering out SNPs with large number of missing or mixed calls
-- A plot of the number of missing calls as a proportion of call per SNP. (Y-axis)
-- A plot of the number of mixed calls as a proportion of call per SNP. (Y-axis)
+	- A plot of the number of missing calls as a proportion of call per SNP. (Y-axis)
+	- A plot of the number of mixed calls as a proportion of call per SNP. (Y-axis)
 + Filtering out SNPs with low coverage over all samples
-- A plot containing the density function of the total coverage per SNP (X-axis)
+	- A plot containing the density function of the total coverage per SNP (X-axis)
+
+
 
