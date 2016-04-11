@@ -31,7 +31,7 @@ These programs and perl modules must be installed for full functionality of the 
 
 
 ## Example usage:
-To map fastq files to a reference and perform variant calling we can use the `map_call_snps_0.2.pl` script. This can be done either step by step using the different filtering modules individually or can be performed in one run. A simple directory structure and naming sceme must be followed in order for the pipeline to run correctly. Make a directory called `fastq` and place the reads using the naming sceme <sample-id>_1.fastq.gz <sample-id>_2.fastq.gz> for paired end reads. Navigate back to the directory containing the fastq folder and you are ready to run the pipeline:<br>
+To map fastq files to a reference and perform variant calling we can use the `map_call_snps_0.2.pl` script. This can be done either step by step using the different filtering modules individually or can be performed in one run. A simple directory structure and naming scheme must be followed in order for the pipeline to run correctly. Make a directory called `fastq` and place the reads using the naming scheme `<sample-id>_1.fastq.gz` and `<sample-id>_2.fastq.gz>` for paired end reads. Navigate back to the directory containing the fastq folder and you are ready to run the pipeline:<br>
 	`map_call_snps.pl all <sample> <ref> <threads> <working_dir> <storage_dir>`<br>
 
 | Option | Description |
