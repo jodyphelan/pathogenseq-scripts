@@ -32,7 +32,7 @@ These programs and perl modules must be installed for full functionality of the 
 
 ## Example usage:
 To map fastq files to a reference and perform variant calling we can use the `map_call_snps_0.2.pl` script. This can be done either step by step using the different filtering modules individually or can be performed in one run. A simple directory structure and naming scheme must be followed in order for the pipeline to run correctly. Make a directory called `fastq` and place the reads using the naming scheme `<sample-id>_1.fastq.gz` and `<sample-id>_2.fastq.gz` for paired end reads. Navigate back to the directory containing the fastq folder and you are ready to run the pipeline:<br>
-	`map_call_snps.pl all <sample> <ref> <threads> <working_dir> <storage_dir>`<br>
+	```map_call_snps.pl all <sample> <ref> <threads> <working_dir> <storage_dir>```<br>
 
 | Option | Description |
 | ------ | ----------- |
@@ -40,10 +40,24 @@ To map fastq files to a reference and perform variant calling we can use the `ma
 | ref	 | The reference fasta |
 | threads | The number of threads to be used |
 | working_dir | The directory used to process data and store temporary files (most cases the current directory) |
-| storeage_dir | The directory used to store data (most cases the current directory) |
+| storage_dir | The directory used to store data (most cases the current directory) |
+
+The final structure will look like the following:
+```
+base_dir/
+├──fastq/
+│  ├──sample1_1.fastq
+│  └──sample1_2.fastq
+├──coverage/
+│  └──sample1.coverage.gz
+├──vcf/
+│  └──sample1.filt.vcf.gz
+└──bam/
+   └──sample1.bam
+```
 
 To create a SNP matrix from the VCFs and coverage files we will use the `filter_SNPs_MT_0.2.pl` script. This can be done either step by step using the different filtering modules individually or can be performed in one run. Before we can run the main pipeline we should create a mappability file listing the unique regions in the genome:<br>
-     `filter_SNPs_MT.pl mappability <ref> <kmer> <threads>`<br>
+```filter_SNPs_MT.pl mappability <ref> <kmer> <threads>```<br>
 
 | Option | Description |
 | ------ | ----------- |
