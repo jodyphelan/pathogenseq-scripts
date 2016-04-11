@@ -26,5 +26,5 @@ These programs and perl modules must be installed for full functionality of the 
 	cd pathogenseq-scripts
 	bash downloadPrograms.sh
 	
-Before using the pipeline add the scripts and programs to the path each time you start a new session:
+######## Before using the pipeline add the scripts and programs to the path each time you start a new session:
 	source add_to_path.source 
