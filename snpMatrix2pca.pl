@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 
+if (scalar @ARGV != 3){ print "\nsnpMatrix2pca.pl <snp_mat.bin> <annotations> <threads>  \n\n"; exit;}
 
 open OUT, ">pca.r" or die;
 print OUT 'library("data.table")
