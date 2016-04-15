@@ -60,7 +60,7 @@ base_dir/
 
 To create a SNP matrix from the VCFs and coverage files we will use the `filter_SNPs_MT_0.2.pl` script. This can be done either step by step using the different filtering modules individually or can be performed in one run. Before we can run the main pipeline we should create a mappability file listing the unique regions in the genome:<br>
 ```
-filter_SNPs_MT.pl mappability <ref> <kmer> <threads>
+filter_SNPs_MT_0.2.pl mappability <ref> <kmer> <threads>
 ```
 
 | Option | Description |

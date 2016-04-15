@@ -33,6 +33,7 @@ while(<F>){
 	chomp;
 	my ($sample,$category) = split /\s+/,$_;
 	$category{$sample} = $category;
+	if ($category eq "NA"){next;}
 	$categories{$category} = 1;
 }
 close(F);
@@ -77,23 +78,26 @@ while(<F>){
 		if (exists($keepSamples{$i})){
 			if ($a[$i] eq "NA"){next;}
 			$gt{$keepSamples{$i}} += $a[$i];
+#			print "Adding $a[$i] to $keepSamples{$i}\n";
 			$N{$keepSamples{$i}} ++;
 			$totAlt += $a[$i];
 		}
 	}
 	if ($totAlt == 0){print "No alts\n"; next;}
 	my %af;
-	foreach my $cat (keys %gt){
+	foreach my $cat (@categories){
 		$af{$cat} = $gt{$cat}/$N{$cat};
+#		print "Allele freq of $cat is $af{$cat}\n"
 	} 
 	my @cats = keys %gt;
 	
-	my @gt;
-	my @N;
+
 	print OUT "$chr\t$pos";
 	foreach my $masterCat (@categories) {
-		print "Analysing $masterCat\n";
-		foreach my $cat (keys %gt){
+#		print "Analysing $masterCat\n";
+		my @gt;
+		my @N;
+		foreach my $cat (@categories){
 			if($cat eq $masterCat){
 				$gt[0] = $gt{$cat};
 				$N[0] = $N{$cat};
@@ -105,15 +109,19 @@ while(<F>){
 		my @af;
 		$af[0] = $gt[0]/$N[0];
 		$af[1] = $gt[1]/$N[1];
-	
-		my $totSamps = $N[0] + $N[1];
-		my $nBar = ($N[0]/2) + ($N[1]/2);
-		my $pBar = ($N[0]*$af[0]/$totSamps) + ($N[1]*$af[1]/$totSamps);
-		
-		my $fst = (($N[0]*(($af[0]-$pBar)**2)/$nBar) + ($N[1]*(($af[1]-$pBar)**2)/$nBar))/$pBar*(1-$pBar);
-		printf("%f\t%f", $af[0], $af[1]);
-		print "\t$fst\n";
-		print OUT "\t$fst";
+
+		my @H;
+		$H[0] = 2*($af[0]*(1-$af[0]));
+		$H[1] = 2*($af[1]*(1-$af[1]));
+		my $Hs = ($H[0] + $H[1])/2;
+		my $af1 = ($af[0] + $af[1])/2;
+		my $af2 = (1-$af[0] + 1-$af[1])/2;
+		my $Ht = 2*$af1*$af2;
+		my $Fst = ($Ht-$Hs)/$Ht;
+#		printf("AF: %f\t%f\n", $af[0], $af[1]); 		
+#		print "H1: $H[0]\nH2: $H[1]\n";
+#		print "Hs = $Hs\nHt = $Ht\nFst = $Fst\n";
+		print OUT "\t$Fst";
 	}
 	print OUT "\n";
 

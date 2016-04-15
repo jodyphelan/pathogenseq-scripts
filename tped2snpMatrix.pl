@@ -37,7 +37,7 @@ print OUT "\n";
 open F, "$ARGV[0].tped" or die;
 while(<F>){
 	chomp;
-	$_ =~ s/(\d+\s[\w\d\-]+\s\d+\s\d+)\s//;
+	$_ =~ s/(\S+\s\S+\s\d+\s\d+)\s//;
 	my $info = $1;
 	$info =~ s/ /\t/g;
 	my ($chr,$id,$pos) = (split /\s+/, $info)[0,1,3];

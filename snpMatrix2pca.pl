@@ -27,19 +27,22 @@ open OUT, ">pca.r" or die;
 print OUT 'library("data.table")
 library(amap)
 ';
+print OUT "meta<-read.table(\"$ARGV[1]\", sep = \"\\t\")\n";
 print OUT "temp <- fread(\"$ARGV[0]\",header=T, sep=\"\\t\")\n";
 print OUT 'temp<-as.data.frame(temp)
 snps<-temp[,4:dim(temp)[2]]
+samples<-colnames(snps)
+if(sum(is.na(match(samples,meta$V1)))>0){warning("Differing number of samples in datasets");}
+snps<-snps[,match(intersect(samples,meta$V1),samples)]
+meta<-meta[match(intersect(meta$V1,samples),meta$V1),]
 ';
 print OUT "dists <- as.matrix(Dist(t(snps),method=\"manhattan\", nbproc=$ARGV[2]))\n";
 print OUT 'results.pca<- cmdscale(dists,k=10,eig=T)
 vars <- round(results.pca$eig/sum(results.pca$eig)*100,1)
 write.table(dists,"samples.dists")
 ';
-print OUT "meta<-read.table(\"$ARGV[1]\", sep = \"\\t\")\n";
 
 print OUT '
-if(sum(is.na(match(rownames(results.pca$points),meta$V1)))>0){print("Not all samples present in Meta data");exit;}
 
 meta<-meta[match(rownames(results.pca$points),meta$V1),]
 temp<-names(table(meta$V2))
