@@ -25,7 +25,7 @@ use List::Util 'max';
 use Cwd;
 use Cwd 'abs_path';
 
-if (scalar @ARGV == 0){ print "\n################# map_call_snps.pl ################\n\n\ttrim - trim reads\n\tmap - map a sample with reads\n\tsamtools - call variants using samtools\n\tcoverage - create coverage file\n\tall - perform whole mapping pipeline\n\n################################################### \n\n"; exit;}
+if (scalar @ARGV == 0){ print "\n################# map_call_snps.pl ################\n\n\ttrim - trim reads\n\tmap - map a sample with reads\n\tsamtools - call variants using samtools\n\tcoverage - create coverage file\n\tsamtools_coverage - create coverage file using samtools\n\tall - perform whole mapping pipeline\n\n################################################### \n\n"; exit;}
 
 
 if ($ARGV[0] eq "trim"){
@@ -47,9 +47,14 @@ if ($ARGV[0] eq "trim"){
 } elsif ($ARGV[0] eq "coverage"){
 	if (scalar @ARGV != 4){ print "\nmap_call_snps.pl coverage <sample> <ref> <threads>\n\n"; exit;}
 	my $sample = $ARGV[1];
-    my $ref = $ARGV[2];
+	my $ref = $ARGV[2];
 	my $threads = $ARGV[3];
 	extract_cov($sample,$ref,$threads);
+} elsif ($ARGV[0] eq "samtools_coverage"){
+	if (scalar @ARGV != 3){ print "\nmap_call_snps.pl samtools_coverage <sample> <ref>\n\n"; exit;}
+	my $sample = $ARGV[1];
+	my $ref = $ARGV[2];
+	samtools_cov($sample,$ref);
 } elsif ($ARGV[0] eq "all"){
 	if (scalar @ARGV != 6){ print "\nmap_call_snps.pl all <sample> <ref> <threads> <working_dir> <storage_dir>\n\n"; exit;}
 	my $sample = $ARGV[1];
@@ -261,5 +266,89 @@ sub pipeline{
 }
 
 
+sub samtools_cov{
+	my $sample = $_[0];
+	my $ref_seq = $_[1];
+	my ($r1, $r2) = hash_contigs($ref_seq);
+	my %lhChromosomes  = %{$r1};
+	my @laChromosomes = @{$r2};
+	
+	`samtools mpileup -B -Q 23 -d 2000 -C 50 -f $ref_seq $sample.bam > $sample.pileup`;
+	
+	if( !-e "$sample.pileup"){ print "Can't find pileup\n"; exit;}
+	if( -e "$sample.coverage"){print "Found coveraqge\n"; exit;}
 
+	open HC, ">$sample.coverage";
+	print HC "Chromosome\tPosition\tReference\tA\tC\tG\tT\tN\tTotal\tAbs\tRel\tInsertions\tDeletions\n";
+	foreach my $chr (@laChromosomes) {
+		my %lhCoverage;
+		my $com = "awk \' { if (\$1 == \"$chr\") { print } } \' $sample.pileup";
+		my @laPileup = `$com`;
+		foreach (@laPileup) {
+			chomp;
+	  		my @laLine = split /\s+/,$_;
+			my $liLine = scalar(@laLine);
+			my ($chr, $pos, $ref, $total) = @laLine[0..3];
+			my $id = $chr."%".$pos;
+			$ref = uc($ref);
+			if ($liLine >= 5 && $total > 0) {
+				my ($lsPile, $ins, $del) = ($laLine[4], 0, 0);
+				$lsPile = uc($lsPile);
+				$lsPile =~ s/\^.//g;
+				$lsPile =~ s/\$//g;
+				$lsPile =~ s/\*/N/g;
+				$lsPile =~ s/[.,]/$ref/g;
+				$ins = () = $lsPile =~ /\+/g;
+				$del = () = $lsPile =~ /\-/g;
+				my @laIndels = split /[\+\-]/, $lsPile;
+				$lsPile = "";
+				foreach (@laIndels){
+					my @laTemp = /(\d+)(.*)/;
+					if (@laTemp){
+						$lsPile .= substr($laTemp[1],$laTemp[0]);
+					} else {
+						$lsPile .= $_;
+					}
+				}
+				my ($a, $c, $g, $t, $n) = (0, 0, 0, 0, 0);
+				$a = $lsPile =~ tr/A//;
+				$c = $lsPile =~ tr/C//;
+				$g = $lsPile =~ tr/G//;
+				$t = $lsPile =~ tr/T//;
+				$n = $lsPile =~ tr/N//;
+			
+				if ($total != ($a + $c + $g + $t + $n)) {
+					open H, ">>coverage/$sample.error";
+					die "$chr\t$pos\t$total\t$a\t$c\t$g\t$t\n";
+					close H;
+ 					$total = $a + $c + $g + $t + $n;
+				}
+
+				my ($abs, $rel) = ("0", "0");
+				if ($total > 0) {
+					$abs = max(($a,$c,$g,$t));
+					$rel = $abs/$total;
+					$rel = sprintf("%0.3f",$rel);
+					$lhCoverage{$id} = "$chr\t$pos\t$ref\t$a\t$c\t$g\t$t\t$n\t$total\t$abs\t$rel\t$ins\t$del";
+					
+				}
+			}
+		}
+		my $len = length($lhChromosomes{$chr});
+		my @seq = split //, $lhChromosomes{$chr};
+		for (my $i = 1; $i <= $len; $i++) {
+			my $id = $chr."%".$i;
+			if (defined $lhCoverage{$id}) {
+				print HC "$lhCoverage{$id}\n";
+			} else {
+				if (defined $seq[$i-1]) {
+					my $ref = uc($seq[$i-1]);
+					print HC "$chr\t$i\t$ref\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
+					
+				}
+			}
+		}
+	}
+	close HC;
+}
 
