@@ -279,7 +279,7 @@ sub samtools_cov{
 	if( -e "$sample.coverage"){print "Found coveraqge\n"; exit;}
 
 	open HC, ">$sample.coverage";
-	print HC "Chromosome\tPosition\tReference\tA\tC\tG\tT\tN\tTotal\tAbs\tRel\tInsertions\tDeletions\n";
+	print HC "REF\tPOS\tA\tC\tG\tT\tNtDEL\tN\tSAMPLE\n";
 	foreach my $chr (@laChromosomes) {
 		my %lhCoverage;
 		my $com = "awk \' { if (\$1 == \"$chr\") { print } } \' $sample.pileup";
@@ -329,7 +329,7 @@ sub samtools_cov{
 					$abs = max(($a,$c,$g,$t));
 					$rel = $abs/$total;
 					$rel = sprintf("%0.3f",$rel);
-					$lhCoverage{$id} = "$chr\t$pos\t$ref\t$a\t$c\t$g\t$t\t$n\t$total\t$abs\t$rel\t$ins\t$del";
+					$lhCoverage{$id} = "$chr\t$pos\t$total\t$a\t$c\t$g\t$t\t$del\t$n\t$sample";
 					
 				}
 			}
