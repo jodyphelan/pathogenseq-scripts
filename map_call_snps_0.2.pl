@@ -330,22 +330,22 @@ sub samtools_cov{
 					$rel = $abs/$total;
 					$rel = sprintf("%0.3f",$rel);
 					$lhCoverage{$id} = "$chr\t$pos\t$total\t$a\t$c\t$g\t$t\t$del\t$n\t$sample";
-					
 				}
 			}
 		}
 		my $len = length($lhChromosomes{$chr});
-		my @seq = split //, $lhChromosomes{$chr};
+#		my @seq = split //, $lhChromosomes{$chr};
 		for (my $i = 1; $i <= $len; $i++) {
 			my $id = $chr."%".$i;
 			if (defined $lhCoverage{$id}) {
 				print HC "$lhCoverage{$id}\n";
 			} else {
-				if (defined $seq[$i-1]) {
-					my $ref = uc($seq[$i-1]);
-					print HC "$chr\t$i\t$ref\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
-					
-				}
+				print HC "$chr\t$i\t0\t0\t0\t0\t0\t0\t0\t$sample\n";
+#				if (defined $seq[$i-1]) {
+#					my $ref = uc($seq[$i-1]);
+#					print HC "$chr\t$i\t$ref\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n";
+#					
+#				}
 			}
 		}
 	}

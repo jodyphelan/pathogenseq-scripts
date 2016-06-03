@@ -37,7 +37,7 @@ GetOptions(
 
 if (!$rerun){
 	if (!$matFile or !$annFile or !$threads){
-		print "\nsnpMatrix2pca.pl -m <mat.bin> -a <ann> -t <threads>\n\n";
+		print "\nsnpMatrix2pca.pl -m <mat.bin> -a <ann> -t <threads> (--rerun)\n\n";
 		exit;
 	}
 	init_pca();
