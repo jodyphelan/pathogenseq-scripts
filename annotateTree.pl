@@ -47,12 +47,13 @@ x11()
 ';
 print OUT "plot(tree,show.tip.label=F,type=\"$ARGV[2]\")";
 print OUT '
-cols.uniq<-rainbow(length(unique(meta$V2)))
+library(RColorBrewer)
+cols.uniq<-brewer.pal(length(unique(meta$V2)),"BrBG")
 meta.uniq<-sort(unique(meta$V2))
 cols<-cols.uniq[match(meta$V2,meta.uniq)]
-tiplabels(pch=20,tip=match(meta$V1,tree$tip.label),col=cols)
+tiplabels(pch=21,tip=match(meta$V1,tree$tip.label),bg=cols)
 temp<-locator(1)
-legend(temp$x,temp$y,fill=rainbow(length(meta.uniq)),legend=meta.uniq)
+legend(temp$x,temp$y,fill=brewer.pal(length(meta.uniq),"BrBG"),legend=meta.uniq)
 
 locator(1)
 ';
