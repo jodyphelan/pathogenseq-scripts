@@ -53,7 +53,7 @@ meta.uniq<-unique(meta$V2)
 cols<-cols.uniq[match(meta$V2,meta.uniq)]
 tiplabels(pch=21,tip=match(meta$V1,tree$tip.label),bg=cols)
 temp<-locator(1)
-legend(temp$x,temp$y,fill=brewer.pal(length(meta.uniq),"BrBG"),legend=meta.uniq)
+legend(temp$x,temp$y,fill=cols,legend=meta.uniq)
 
 locator(1)
 ';
