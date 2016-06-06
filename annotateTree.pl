@@ -50,6 +50,9 @@ print OUT '
 library(RColorBrewer)
 cols.uniq<-colorRampPalette(brewer.pal(11,"Set3"))(length(unique(meta$V2)))
 meta.uniq<-unique(meta$V2)
+symb.uniq<-rep(c(21,22),(round(length(meta.uniq)/2)+1))
+symb<-symb.uniq[match(meta$V2,meta.uniq)]
+
 cols<-cols.uniq[match(meta$V2,meta.uniq)]
 tiplabels(pch=21,tip=match(meta$V1,tree$tip.label),bg=cols)
 temp<-locator(1)
