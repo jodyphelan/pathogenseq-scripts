@@ -40,9 +40,9 @@ print OUT '
 tree.raw2<-drop.tip(tree.raw,setdiff(meta$V1,tree.raw$tip.label))
 tree.raw3<-drop.tip(tree.raw2,setdiff(tree.raw$tip.label,meta$V1))
 meta<-meta[match(tree.raw3$tip.label,meta$V1),]
-tree<-drop.tip(tree.raw3,as.character(unlist(meta$V1[which(is.na(meta$V2))])))
-meta<-meta[which(!is.na(meta$V2)),]
-
+#tree<-drop.tip(tree.raw3,as.character(unlist(meta$V1[which(is.na(meta$V2))])))
+#meta<-meta[which(!is.na(meta$V2)),]
+tree<-tree.raw3
 x11()
 ';
 print OUT "plot(tree,show.tip.label=F,type=\"$ARGV[2]\")";
@@ -52,6 +52,7 @@ cols.uniq<-colorRampPalette(brewer.pal(11,"Set3"))(length(unique(meta$V2)))
 meta.uniq<-unique(meta$V2)
 symb.uniq<-rep(c(21,22),(round(length(meta.uniq)/2)+1))
 symb<-symb.uniq[match(meta$V2,meta.uniq)]
+cols.uniq[match("NA",meta.uniq)]<-"black"
 
 cols<-cols.uniq[match(meta$V2,meta.uniq)]
 tiplabels(pch=symb,tip=match(meta$V1,tree$tip.label),bg=cols)
