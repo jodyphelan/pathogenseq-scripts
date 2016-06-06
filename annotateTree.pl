@@ -48,7 +48,7 @@ x11()
 print OUT "plot(tree,show.tip.label=F,type=\"$ARGV[2]\")";
 print OUT '
 library(RColorBrewer)
-cols.uniq<-colorRampPalette(brewer.pal(11,"BrBG"))(length(unique(meta$V2)))
+cols.uniq<-colorRampPalette(brewer.pal(11,"set3"))(length(unique(meta$V2)))
 meta.uniq<-unique(meta$V2)
 cols<-cols.uniq[match(meta$V2,meta.uniq)]
 tiplabels(pch=21,tip=match(meta$V1,tree$tip.label),bg=cols)
