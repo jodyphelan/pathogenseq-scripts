@@ -42,6 +42,7 @@ tree.raw3<-drop.tip(tree.raw2,setdiff(tree.raw$tip.label,meta$V1))
 meta<-meta[match(tree.raw3$tip.label,meta$V1),]
 #tree<-drop.tip(tree.raw3,as.character(unlist(meta$V1[which(is.na(meta$V2))])))
 #meta<-meta[which(!is.na(meta$V2)),]
+meta$V2[which(!is.na(meta$V2))]<-"NA"
 tree<-tree.raw3
 x11()
 ';
