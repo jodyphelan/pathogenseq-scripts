@@ -26,11 +26,13 @@ my $treeFile;
 my $annFile;
 my $type = "u";
 my $out = "FALSE";
+my $png = "FALSE";
 GetOptions(
     'tree|t=s' => \$treeFile,
     'ann|a=s' => \$annFile,
     'type|y=s' => \$type,
-	'out|o=s' => \$out
+	'out|o=s' => \$out,
+	'png|p=s' => \$png,
 ) or die "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n";
 
 if (!$treeFile or !$annFile){
@@ -38,13 +40,13 @@ if (!$treeFile or !$annFile){
 }
 
 
-writeScript($treeFile,$annFile,$type,$out);
+writeScript($treeFile,$annFile,$type,$outi,$png);
 `Rscript tree.r`;
 
 
 sub writeScript{
 
-my ($treeFile,$annFile,$type,$out) = @_;
+my ($treeFile,$annFile,$type,$out,$png) = @_;
 
 open OUT, ">tree.r" or die;
 
@@ -53,6 +55,11 @@ library(ape)
 ';
 print OUT "tree.raw<-read.tree(\"$treeFile\")\n";
 print OUT "meta<-read.table(\"$annFile\")\n";
+
+if ($png ne "FALSE"){
+	print OUT "png(\"$png\",width=1280,height=1024)\n";
+}
+
 print OUT '
 tree.raw2<-drop.tip(tree.raw,setdiff(meta$V1,tree.raw$tip.label))
 tree.raw3<-drop.tip(tree.raw2,setdiff(tree.raw$tip.label,meta$V1))
@@ -87,6 +94,12 @@ legend(temp$x,temp$y,fill=cols.uniq,legend=meta.uniq)
 
 locator(1)
 ';
+
+if ($png ne "FALSE"){
+    print OUT "dev.off()\n";
+}
+
+}
 
 }
 
