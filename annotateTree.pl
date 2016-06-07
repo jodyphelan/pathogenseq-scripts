@@ -33,6 +33,9 @@ GetOptions(
 	'out|o=s' => \$out
 ) or die "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n";
 
+if (!$treeFile or !$annFile){
+	print "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n"; exit;
+}
 
 
 writeScript($treeFile,$annFile,$type,$out);
