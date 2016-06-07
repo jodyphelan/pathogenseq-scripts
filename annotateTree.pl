@@ -27,6 +27,7 @@ my $annFile;
 my $type = "u";
 my $out = "FALSE";
 my $png = "FALSE";
+
 GetOptions(
     'tree|t=s' => \$treeFile,
     'ann|a=s' => \$annFile,
