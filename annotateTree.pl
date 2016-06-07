@@ -61,7 +61,7 @@ print OUT "if ($out==FALSE){\n";
 print OUT '
 tree<-tree.raw3
 } else {
-'
+';
 print OUT "\ttree<-drop.tip(tree.raw3,\"$out\")\n";
 print OUT '
 }
