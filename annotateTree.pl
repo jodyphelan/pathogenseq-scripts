@@ -57,10 +57,6 @@ library(ape)
 print OUT "tree.raw<-read.tree(\"$treeFile\")\n";
 print OUT "meta<-read.table(\"$annFile\")\n";
 
-if ($png ne "FALSE"){
-	print OUT "png(\"$png\",width=1280,height=1024)\n";
-}
-
 print OUT '
 tree.raw2<-drop.tip(tree.raw,setdiff(meta$V1,tree.raw$tip.label))
 tree.raw3<-drop.tip(tree.raw2,setdiff(tree.raw$tip.label,meta$V1))
@@ -94,10 +90,19 @@ temp<-locator(1)
 legend(temp$x,temp$y,fill=cols.uniq,legend=meta.uniq)
 
 locator(1)
+dev.off()
 ';
 
 if ($png ne "FALSE"){
-    print OUT "dev.off()\n";
+
+	print OUT "png(\"$png\",width=1280,height=1024)\n";
+	print OUT "plot(tree,show.tip.label=F,type=\"$type\")";
+	print OUT '
+tiplabels(pch=symb,tip=match(meta$V1,tree$tip.label),bg=cols)
+temp<-locator(1)
+legend(temp$x,temp$y,fill=cols.uniq,legend=meta.uniq)
+';
+	print OUT "dev.off()\n";
 }
 
 }
