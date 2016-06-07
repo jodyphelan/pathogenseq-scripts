@@ -99,7 +99,6 @@ if ($png ne "FALSE"){
 	print OUT "plot(tree,show.tip.label=F,type=\"$type\")";
 	print OUT '
 tiplabels(pch=symb,tip=match(meta$V1,tree$tip.label),bg=cols)
-temp<-locator(1)
 legend(temp$x,temp$y,fill=cols.uniq,legend=meta.uniq)
 ';
 	print OUT "dev.off()\n";
