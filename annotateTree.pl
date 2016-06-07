@@ -61,7 +61,7 @@ if (length(which(is.na(meta$V2)))>0){
 	meta$V2[which(is.na(meta$V2))]<-"NA"
 }
 ';
-print OUT "if ($out==FALSE){\n";
+print OUT "if (\"$out\"==\"FALSE\"){\n";
 print OUT '
 tree<-tree.raw3
 } else {
