@@ -40,7 +40,7 @@ if (!$treeFile or !$annFile){
 }
 
 
-writeScript($treeFile,$annFile,$type,$outi,$png);
+writeScript($treeFile,$annFile,$type,$out,$png);
 `Rscript tree.r`;
 
 
