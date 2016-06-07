@@ -21,21 +21,34 @@
 use strict;
 use warnings;
 
-if (scalar @ARGV != 3){print "\n$0 <tree> <meta> <c,f>\n\n"; exit;}
+my $treeFile;
+my $annFile;
+my $type = "u";
+my $out = "FALSE";
+GetOptions(
+    'tree|t=s' => \$treeFile,
+    'ann|a=s' => \$annFile,
+    'type|y=s' => \$type,
+	'out|o=s' => \$out
+) or die "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n";
 
-writeScript($ARGV[0],$ARGV[1]);
+
+
+writeScript($treeFile,$annFile,$type,$out);
 `Rscript tree.r`;
 
 
 sub writeScript{
+
+my ($treeFile,$annFile,$type,$out) = @_;
 
 open OUT, ">tree.r" or die;
 
 print OUT '
 library(ape)
 ';
-print OUT "tree.raw<-read.tree(\"$ARGV[0]\")\n";
-print OUT "meta<-read.table(\"$ARGV[1]\")\n";
+print OUT "tree.raw<-read.tree(\"$treeFile\")\n";
+print OUT "meta<-read.table(\"$annFile\")\n";
 print OUT '
 tree.raw2<-drop.tip(tree.raw,setdiff(meta$V1,tree.raw$tip.label))
 tree.raw3<-drop.tip(tree.raw2,setdiff(tree.raw$tip.label,meta$V1))
@@ -43,10 +56,18 @@ meta<-meta[match(tree.raw3$tip.label,meta$V1),]
 if (length(which(is.na(meta$V2)))>0){
 	meta$V2[which(is.na(meta$V2))]<-"NA"
 }
+'
+print OUT "if ($out==FALSE){\n";
+print OUT'
 tree<-tree.raw3
+} else {
+'
+print OUT "\ttree<-drop.tip(tree.raw3,\"$out\")\n";
+print OUT '
+}
 x11()
 ';
-print OUT "plot(tree,show.tip.label=F,type=\"$ARGV[2]\")";
+print OUT "plot(tree,show.tip.label=F,type=\"$type\")";
 print OUT '
 library(RColorBrewer)
 cols.uniq<-colorRampPalette(brewer.pal(11,"Set3"))(length(unique(meta$V2)))
