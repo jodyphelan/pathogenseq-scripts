@@ -56,7 +56,7 @@ meta<-meta[match(tree.raw3$tip.label,meta$V1),]
 if (length(which(is.na(meta$V2)))>0){
 	meta$V2[which(is.na(meta$V2))]<-"NA"
 }
-'
+';
 print OUT "if ($out==FALSE){\n";
 print OUT'
 tree<-tree.raw3
