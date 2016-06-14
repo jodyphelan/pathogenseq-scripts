@@ -44,8 +44,8 @@ while(<F>){
 	print OUT "$chr\t$pos\t$id";
 	print "$chr $pos\n";
 	$_ =~ s/0/NA/g;
-	$_ =~ s/1/0/g;
-	$_ =~ s/2/1/g;
+#	$_ =~ s/1/0/g;
+	$_ =~ s/2/0/g;
 	my @a = split /\s+/,$_;
 	for (my $i = 0; $i<=$#a; $i=$i+2){
 		if ($a[$i] eq "NA" and $a[$i+1] eq "NA"){print OUT "\tNA"; next;}
