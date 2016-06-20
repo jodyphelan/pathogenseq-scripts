@@ -26,6 +26,7 @@ my $treeFile;
 my $annFile;
 my $type = "u";
 my $out = "FALSE";
+my $root = "FALSE";
 my $png = "FALSE";
 
 GetOptions(
@@ -33,8 +34,21 @@ GetOptions(
     'ann|a=s' => \$annFile,
     'type|y=s' => \$type,
 	'out|o=s' => \$out,
+	'root|r=s' => \$root,
 	'png|p=s' => \$png,
-) or die "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n";
+	
+) or die '
+
+annotateTree.pl -t <tree> -a <annotation>
+
+	--tree|-t	Tree file
+	--ann|-a	Annotation text file containing two columns - first with samples sames and sedcond with metadata
+	--type|-y	Type of tree [c,u,p,f]
+	--out|-o	String containing name of sample to not plot
+	--root|-r	String contianing name of sample to root tree at
+	--png|-p	Output to png file
+
+';
 
 if (!$treeFile or !$annFile){
 	print "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n"; exit;
@@ -67,12 +81,18 @@ if (length(which(is.na(meta$V2)))>0){
 ';
 print OUT "if (\"$out\"==\"FALSE\"){\n";
 print OUT '
-tree<-tree.raw3
+tree.raw4<-tree.raw3
 } else {
 ';
-print OUT "\ttree<-drop.tip(tree.raw3,\"$out\")\n";
+print OUT "\ttree.raw4<-drop.tip(tree.raw3,\"$out\")\n}\n";
+print OUT "if (\"$root\"==\"FALSE\"){\n";
 print OUT '
-}
+tree<-tree.raw4
+} else {
+';
+print OUT "\ttree<-root(tree.raw4,\"$root\")\n}\n";
+
+print OUT '
 x11()
 ';
 print OUT "plot(tree,show.tip.label=F,type=\"$type\")";
