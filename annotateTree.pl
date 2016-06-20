@@ -30,7 +30,6 @@ my $root = "FALSE";
 my $png = "FALSE";
 
 my $usage =  '
-
 annotateTree.pl -t <tree> -a <annotation>
 
 	--tree|-t	Tree file
