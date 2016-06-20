@@ -76,7 +76,7 @@ print OUT "meta<-read.table(\"$annFile\")\n";
 print OUT '
 tree.raw2<-drop.tip(tree.raw,setdiff(meta$V1,tree.raw$tip.label))
 tree.raw3<-drop.tip(tree.raw2,setdiff(tree.raw$tip.label,meta$V1))
-meta<-meta[match(tree.raw3$tip.label,meta$V1),]
+#meta<-meta[match(tree.raw3$tip.label,meta$V1),]
 if (length(which(is.na(meta$V2)))>0){
 	meta$V2[which(is.na(meta$V2))]<-"NA"
 }
