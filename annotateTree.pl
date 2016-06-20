@@ -29,15 +29,7 @@ my $out = "FALSE";
 my $root = "FALSE";
 my $png = "FALSE";
 
-GetOptions(
-    'tree|t=s' => \$treeFile,
-    'ann|a=s' => \$annFile,
-    'type|y=s' => \$type,
-	'out|o=s' => \$out,
-	'root|r=s' => \$root,
-	'png|p=s' => \$png,
-	
-) or die '
+my $usage =  '
 
 annotateTree.pl -t <tree> -a <annotation>
 
@@ -50,8 +42,19 @@ annotateTree.pl -t <tree> -a <annotation>
 
 ';
 
+
+GetOptions(
+    'tree|t=s' => \$treeFile,
+    'ann|a=s' => \$annFile,
+    'type|y=s' => \$type,
+	'out|o=s' => \$out,
+	'root|r=s' => \$root,
+	'png|p=s' => \$png,
+	
+) or die $usage;
+
 if (!$treeFile or !$annFile){
-	print "\nsnpMatrix2pca.pl -t <file.tree> -a <ann>\n\n"; exit;
+	print $usage; exit;
 }
 
 
