@@ -72,7 +72,7 @@ for (i in 1:9){
 	pcaPlot(i,i+1)
 	loc<-locator(1)
 	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
-	png(paste("PC",i,"vPC",i+1,".png",sep=""))
+	png(paste("PC",i,"vPC",i+1,".png",sep=""),800,600)
 	pcaPlot(i,i+1)
 	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
 	dev.off()
