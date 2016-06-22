@@ -70,7 +70,7 @@ while(<F>){
 	my $chr = shift @a;
 	my $pos = shift @a;
 	my $ref = shift @a;
-	print "$chr\t$pos\n";
+#	print "$chr\t$pos\n";
 	my $line = "$chr\t$pos\t$ref";
 	my %alt_present;
 	for (my $i=0; $i<=$#a; $i++){
