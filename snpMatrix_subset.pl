@@ -20,6 +20,7 @@
 
 use strict;
 use warnings;
+use Term::ProgressBar;
 
 
 if (scalar @ARGV != 3){ print "\nbigSnpMatrix_subset.pl <samples> <snp_mat> <outfile>  \n\n"; exit;}
@@ -32,13 +33,22 @@ while(<F>){
 }
 close(F);
 
-open OUT, ">$ARGV[2]" or die;
+my $totSNPs = `wc -l < $ARGV[1]`;
+chomp $totSNPs;
+my $progress = Term::ProgressBar->new({name => 'Filtering', count => $totSNPs, remove => 1});
+$progress->minor(0);
+my $next_update = 0;
 my $x = 0;
+
+
+open OUT, ">$ARGV[2]" or die;
+my $q = 0;
 my %keepSamples;
 open F, $ARGV[1] or die;
 while(<F>){
 	chomp;
-	if ($x<1){
+	if ($q<1){
+		$q++;
 		$x++;
 		my @a = split /\s+/,$_;
 		my $chr = shift @a;
@@ -71,5 +81,15 @@ while(<F>){
 		}
 	}
 	if (scalar keys %alt_present > 1){print OUT "$line\n";}
+	
+	$x++;
+	if ($x >= $next_update){
+		$next_update = $progress->update($x);
+	}
 }
 close(F);
+
+if ($x >= $next_update){
+        $next_update = $progress->update($x);
+}
+}
