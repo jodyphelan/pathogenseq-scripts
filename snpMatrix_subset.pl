@@ -92,4 +92,3 @@ close(F);
 if ($x >= $next_update){
         $next_update = $progress->update($x);
 }
-}
