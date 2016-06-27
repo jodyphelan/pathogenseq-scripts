@@ -27,8 +27,9 @@ if ($#ARGV+1 < 3){print "\nverifyIndels.pl <sample> <base_dir> <ref>\n\n"; exit;
 
 my $minKmer = 49;
 my $maxKmer = 79;
-#my $kmer = 69;
 my @kmers;
+my @expCov;
+my @covCut;
 my $minIndelSize  = 100;
 my $minFlankSize = 20;
 my $minID = 95;
@@ -46,14 +47,9 @@ my @dellyIndelNo = sort {$a<=>$b} keys %delly;
 `mkdir $sample`; 
 chdir("$sample");
 
-my ($initExpCov,$initCovCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
-print "$initExpCov\t$initCovCut\n";
-print "Expected coverage:$initExpCov\tCoverage cutoff:$initCovCut\tKmer:$kmer\n";
+my ($expCov,$covCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
+print "Expected coverage:$expCov\tCoverage cutoff:$covCut\tKmer:$kmer\n";
 
-for (@kmers){
-	print "$_ in kmers\n";
-}
-exit;
 
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
@@ -128,7 +124,6 @@ close RESULTS;
 sub calibrateAssembly{
 	print "Calibrating assembly parameters\n";
 	my ($base_dir,$sample,$chr,$start,$end) = @_;
-	push @kmers, 63;
 	`mkdir calibration`;
 	chdir("calibration");
 
@@ -146,6 +141,9 @@ sub calibrateAssembly{
 	$kmer =~ s/auto_data//;
 	chomp $exp_cov;
 	chomp $cov_cut;
+	push @kmers,$kmer;
+	push @expCov,$exp_cov;
+	push @covCut,$cov_cut;	
 	return ($exp_cov,$cov_cut,$kmer);
 }
 
@@ -166,8 +164,8 @@ if ($numReads < 1000){
 	return("FAIL");
 }
 `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
-`$velvetOpt --s $kmer --e $kmer -f '-shortPaired -bam filt.bam' 2>> err`;
-my $folder = `ls | grep auto`;
+`velveth k$kmer $kmer -shortPaired -bam filt.bam 2>> err; velvetg k$kmer -exp_cov $expCov -cov_cutoff $covCut 2>> err`;
+my $folder = `ls | grep ^k`;
 chomp $folder;
 if (!-e "$folder/contigs.fa"){
 	print "Local assembly failed...Exiting\n"; exit;
