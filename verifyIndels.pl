@@ -54,9 +54,11 @@ print "Expected coverage:$expCov\tCoverage cutoff:$covCut\tKmer:$kmer\n";
 my $pwd = `pwd`;
 print $pwd;
 
+open KMER,"kmer.txt" or die;
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
 while(<POS>){
+	print KMER "$kmer\n";
 	chomp;
 	my ($name,$chr,$start,$end,$minStart,$maxEnd) = (split /\s+/,$_);
 	my $regionStart = $start - 2000;
@@ -117,7 +119,7 @@ while(<POS>){
 }
 close(POS);
 close RESULTS;
-
+close KMER;
 
 
 #---------------------------------------------------------------------------
