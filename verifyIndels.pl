@@ -21,7 +21,8 @@
 use strict;
 use warnings;
 use Cwd 'abs_path';
-
+use Statistics::Lite qw(:all);
+use POSIX;
 
 if ($#ARGV+1 < 3){print "\nverifyIndels.pl <sample> <base_dir> <ref>\n\n"; exit;}
 
@@ -197,6 +198,27 @@ if (!-e "$folder/contigs.fa"){
 	print "Local assembly failed...Exiting\n"; exit;
 }
 `ln -s $folder/contigs.fa contigs.fa`;
+
+my $exp_cov = `tail -n18 *Log* | head -1 | awk '{print \$8}'`;
+my $cov_cut = `tail -n18 *Log* | head -1 |awk  '{print \$10}'`;
+my $kmer = `ls -d auto_data*`;
+chomp $kmer;
+$kmer =~ s/auto_data_//;
+chomp $exp_cov;
+chomp $cov_cut;
+push @kmers,$kmer;
+push @expCov,$exp_cov;
+push @covCut,$cov_cut;	
+
+my $newCovCut = mean @covCut;
+my $newExpCov = mean @expCov;
+my $newKmer = mean @kmers;
+
+print "Reassigning kmer $kmer => ";
+$kmer = ceil $newKmer;
+$expCov = ceil $newExpCov;
+$covCut = $newCovCut;
+print "$kmer\n";
 
 #### end ####
 }
