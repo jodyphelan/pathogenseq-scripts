@@ -136,7 +136,7 @@ sub calibrateAssembly{
 	`$velvetOpt --s $minKmer --e $maxKmer --x 2 -f '-shortPaired -bam filt.bam' 2>>err`;
 	my $exp_cov = `tail -n18 *Log* | head -1 | awk '{print \$8}'`;
 	my $cov_cut = `tail -n18 *Log* | head -1 |awk  '{print \$10}'`;
-	my $kmer = `ls -d auto_data*`
+	my $kmer = `ls -d auto_data*`;
 	chomp $kmer;
 	$kmer =~ s/auto_data//;
 	chomp $exp_cov;
