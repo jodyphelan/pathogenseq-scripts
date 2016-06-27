@@ -54,7 +54,7 @@ print "Expected coverage:$expCov\tCoverage cutoff:$covCut\tKmer:$kmer\n";
 my $pwd = `pwd`;
 print $pwd;
 
-open KMER,"kmer.txt" or die;
+open KMER,">kmer.txt" or die;
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
 while(<POS>){
