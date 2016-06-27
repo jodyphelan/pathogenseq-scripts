@@ -20,6 +20,7 @@
 
 use strict;
 use warnings;
+use Cwd 'abs_path';
 
 
 if ($#ARGV+1 < 3){print "\nverifyIndels.pl <sample> <base_dir> <ref>\n\n"; exit;}
@@ -31,8 +32,10 @@ my $minIndelSize  = 100;
 my $minFlankSize = 20;
 my $minID = 95;
 my $ref = $ARGV[2];
+$ref = abs_path($ref);
 my $sample = $ARGV[0];
 my $base_dir = $ARGV[1];
+$base_dir = abs_path($base_dir);
 my $samtools = "/usr/local/src/samtools-1.2/samtools";
 my $velvetOpt = "/usr/local/src/VelvetOptimiser-2.2.5/VelvetOptimiser.pl";
 
