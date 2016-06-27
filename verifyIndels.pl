@@ -34,6 +34,11 @@ my $ref = $ARGV[2];
 my $sample = $ARGV[0];
 my $base_dir = $ARGV[1];
 my $samtools = "/usr/local/src/samtools-1.2/samtools";
+my $velvetOpt = "/usr/local/src/VelvetOptimiser-2.2.5/VelvetOptimiser.pl";
+
+my ($initExpCov,$initCovCut) = calibrateAssembly($base_dir,$sample,"Chromosome",1,10000);
+print "$initExpCov\t$initCovCut\n";
+exit;
 
 my $r1 = parseDelly($sample,$base_dir); 
 my %delly = %{$r1};
@@ -110,6 +115,24 @@ close RESULTS;
 #  Sub Routines
 #---------------------------------------------------------------------------
 
+sub calibrateAssembly{
+	my ($base_dir,$sample,$chr,$start,$end) = @_;
+
+	`mkdir calibration`;
+	chdir("calibration");
+	my $numReads = `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" $base_dir/bam/$sample.bam $chr:1-10000 | wc -l`;
+	chomp $numReads;
+	if ($numReads < 1000){
+	    die"Calibration failed";
+	}
+	`$velvetOpt --s $minKmer --e $maxKmer --x 2 -f '-shortPaired -bam filt.bam' 2>>err`;
+	my $exp_cov = `tail -n18 err | head -1 | awk '{print $8}'`;
+	my $cov_cut = `tail -n18 err | head -1 |awk  '{print $10}'`;
+	chomp $exp_cov;
+	chomp $cov_cut;
+	return ($exp_cov,$cov_cut);
+}
+
 sub localAssembly{
 
 #### start #####
@@ -118,7 +141,6 @@ if (-e "contigs.fa"){
 }
 
 
-my $velvetOpt = "/usr/local/src/VelvetOptimiser-2.2.5/VelvetOptimiser.pl";
 my ($base_dir,$sample,$chr,$start,$end) = @_;
 my $numReads = `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" $base_dir/bam/$sample.bam $chr:$start-$end | wc -l`;
 chomp $numReads;
