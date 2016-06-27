@@ -39,15 +39,16 @@ $base_dir = abs_path($base_dir);
 my $samtools = "/usr/local/src/samtools-1.2/samtools";
 my $velvetOpt = "/usr/local/src/VelvetOptimiser-2.2.5/VelvetOptimiser.pl";
 
-my ($initExpCov,$initCovCut) = calibrateAssembly($base_dir,$sample,"Chromosome",1,10000);
-print "$initExpCov\t$initCovCut\n";
-exit;
-
 my $r1 = parseDelly($sample,$base_dir); 
 my %delly = %{$r1};
 my @dellyIndelNo = sort {$a<=>$b} keys %delly;
 `mkdir $sample`; 
 chdir("$sample");
+
+my ($initExpCov,$initCovCut) = calibrateAssembly($base_dir,$sample,"Chromosome",1,10000);
+print "$initExpCov\t$initCovCut\n";
+exit;
+
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
 while(<POS>){
