@@ -28,6 +28,7 @@ if ($#ARGV+1 < 3){print "\nverifyIndels.pl <sample> <base_dir> <ref>\n\n"; exit;
 my $minKmer = 49;
 my $maxKmer = 79;
 #my $kmer = 69;
+my @kmers;
 my $minIndelSize  = 100;
 my $minFlankSize = 20;
 my $minID = 95;
@@ -123,7 +124,7 @@ close RESULTS;
 sub calibrateAssembly{
 	print "Calibrating assembly parameters\n";
 	my ($base_dir,$sample,$chr,$start,$end) = @_;
-
+	push @kmers, 63;
 	`mkdir calibration`;
 	chdir("calibration");
 
