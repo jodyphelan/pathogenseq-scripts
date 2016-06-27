@@ -50,6 +50,8 @@ chdir("$sample");
 my ($expCov,$covCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
 print "Expected coverage:$expCov\tCoverage cutoff:$covCut\tKmer:$kmer\n";
 
+my $pwd = `pwd`;
+print $pwd;
 
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
@@ -144,6 +146,7 @@ sub calibrateAssembly{
 	push @kmers,$kmer;
 	push @expCov,$exp_cov;
 	push @covCut,$cov_cut;	
+	chdir("../");
 	return ($exp_cov,$cov_cut,$kmer);
 }
 
