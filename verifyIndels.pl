@@ -154,6 +154,7 @@ chomp $numReads;
 if ($numReads < 1000){
 	return("FAIL");
 }
+print "sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam\n";
 `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
 `$velvetOpt --s $kmer --e $kmer -f '-shortPaired -bam filt.bam' 2>> err`;
 my $folder = `ls | grep auto`;
