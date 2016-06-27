@@ -47,7 +47,7 @@ chdir("$sample");
 
 my ($initExpCov,$initCovCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
 print "$initExpCov\t$initCovCut\n";
-print "Expected coverage:$exp_cov\tCoverage cutoff:$cov_cut\tKmer:$kmer\n";
+print "Expected coverage:$initExpCov\tCoverage cutoff:$initCovCut\tKmer:$kmer\n";
 exit;
 
 open RESULTS, ">sv.results.txt" or die;
