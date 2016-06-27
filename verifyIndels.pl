@@ -48,7 +48,7 @@ my @dellyIndelNo = sort {$a<=>$b} keys %delly;
 `mkdir $sample`; 
 chdir("$sample");
 
-my ($expCov,$covCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
+our ($expCov,$covCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
 print "Expected coverage:$expCov\tCoverage cutoff:$covCut\tKmer:$kmer\n";
 
 my $pwd = `pwd`;
