@@ -45,7 +45,7 @@ my @dellyIndelNo = sort {$a<=>$b} keys %delly;
 `mkdir $sample`; 
 chdir("$sample");
 
-my ($initExpCov,$initCovCut) = calibrateAssembly($base_dir,$sample,"Chromosome",1,10000);
+my ($initExpCov,$initCovCut) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
 print "$initExpCov\t$initCovCut\n";
 exit;
 
@@ -133,10 +133,11 @@ sub calibrateAssembly{
 	}
 	`sambamba view -F \"not (unmapped or mate_is_unmapped) and mapping_quality >=30\" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
 	`$velvetOpt --s $minKmer --e $maxKmer --x 2 -f '-shortPaired -bam filt.bam' 2>>err`;
-	my $exp_cov = `tail -n18 err | head -1 | awk '{print \$8}'`;
-	my $cov_cut = `tail -n18 err | head -1 |awk  '{print \$10}'`;
+	my $exp_cov = `tail -n18 *Log* | head -1 | awk '{print \$8}'`;
+	my $cov_cut = `tail -n18 *Log* | head -1 |awk  '{print \$10}'`;
 	chomp $exp_cov;
 	chomp $cov_cut;
+	print "Expected coverage:$exp_cov\tCoverage cutoff:$cov_cut\n";
 	return ($exp_cov,$cov_cut);
 	print "Finished calibration\n";
 }
