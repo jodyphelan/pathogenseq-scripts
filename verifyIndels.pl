@@ -60,7 +60,7 @@ open POS, "../indelGenes.positions.txt" or die;
 while(<POS>){
 	
 	print "In kmers:";
-	for (@kmer){
+	for (@kmers){
 		print "\t$_";
 	}
 	print "\n";
