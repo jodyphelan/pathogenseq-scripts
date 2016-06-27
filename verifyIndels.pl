@@ -120,6 +120,7 @@ close RESULTS;
 #---------------------------------------------------------------------------
 
 sub calibrateAssembly{
+	print "Calibrating assembly parameters\n";
 	my ($base_dir,$sample,$chr,$start,$end) = @_;
 
 	`mkdir calibration`;
@@ -136,6 +137,7 @@ sub calibrateAssembly{
 	chomp $exp_cov;
 	chomp $cov_cut;
 	return ($exp_cov,$cov_cut);
+	print "Finished calibration\n";
 }
 
 sub localAssembly{
