@@ -125,14 +125,13 @@ sub calibrateAssembly{
 
 	`mkdir calibration`;
 	chdir("calibration");
-	print "sambamba view -F \"not (unmapped or mate_is_unmapped) and mapping_quality >=30\" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam\n";
 
 	my $numReads = `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" $base_dir/bam/$sample.bam $chr:$start-$end | wc -l`;
 	chomp $numReads;
 	if ($numReads < 1000){
 	    die"Calibration failed";
 	}
-	`sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" $base_dir/bam/$sample.bam $chr:$start-$end 2>>err`;
+	`sambamba view -F \"not (unmapped or mate_is_unmapped) and mapping_quality >=30\" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
 	`$velvetOpt --s $minKmer --e $maxKmer --x 2 -f '-shortPaired -bam filt.bam' 2>>err`;
 	my $exp_cov = `tail -n18 err | head -1 | awk '{print \$8}'`;
 	my $cov_cut = `tail -n18 err | head -1 |awk  '{print \$10}'`;
