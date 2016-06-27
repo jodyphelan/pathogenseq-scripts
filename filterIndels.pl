@@ -259,7 +259,7 @@ sub findGenes{
 	my ($chr,$start,$end,$pointGenes) = @_;
 	my %genes = %{$pointGenes};
 	my $tempGenes;
-	foreach my $gene ( keys %genes ){
+	foreach my $gene ( sort keys %genes ){
 		if (($start > $genes{$gene}{'start'} && $start < $genes{$gene}{'end'}) or ($end > $genes{$gene}{'start'} && $start < $genes{$gene}{'end'})){
 			$tempGenes .= "%$gene";
 #			print "$chr\t$start\t$end\t$gene\n";
