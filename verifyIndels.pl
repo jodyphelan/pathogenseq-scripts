@@ -210,12 +210,12 @@ if (!-e "$folder/contigs.fa"){
 
 my $exp_cov = `tail -n18 *Log* | head -1 | awk '{print \$8}'`;
 my $cov_cut = `tail -n18 *Log* | head -1 |awk  '{print \$10}'`;
-my $kmer = `ls -d auto_data*`;
-chomp $kmer;
-$kmer =~ s/auto_data_//;
+my $tempkmer = `ls -d auto_data*`;
+chomp $tempkmer;
+$tempkmer =~ s/auto_data_//;
 chomp $exp_cov;
 chomp $cov_cut;
-push @kmers,$kmer;
+push @kmers,$tempkmer;
 push @expCov,$exp_cov;
 push @covCut,$cov_cut;	
 
