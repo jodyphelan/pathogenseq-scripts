@@ -58,6 +58,13 @@ open KMER,">kmer.txt" or die;
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
 while(<POS>){
+	
+	print "In kmers:";
+	for (@kmer){
+		print "\t$_";
+	}
+	print "\n";
+
 	print KMER "$kmer\n";
 	chomp;
 	my ($name,$chr,$start,$end,$minStart,$maxEnd) = (split /\s+/,$_);
