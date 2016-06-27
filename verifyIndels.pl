@@ -27,7 +27,7 @@ if ($#ARGV+1 < 3){print "\nverifyIndels.pl <sample> <base_dir> <ref>\n\n"; exit;
 
 my $minKmer = 49;
 my $maxKmer = 79;
-my $kmer = 69;
+#my $kmer = 69;
 my $minIndelSize  = 100;
 my $minFlankSize = 20;
 my $minID = 95;
