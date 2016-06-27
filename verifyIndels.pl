@@ -140,7 +140,7 @@ sub calibrateAssembly{
 	my $cov_cut = `tail -n18 *Log* | head -1 |awk  '{print \$10}'`;
 	my $kmer = `ls -d auto_data*`;
 	chomp $kmer;
-	$kmer =~ s/auto_data//;
+	$kmer =~ s/auto_data_//;
 	chomp $exp_cov;
 	chomp $cov_cut;
 	push @kmers,$kmer;
