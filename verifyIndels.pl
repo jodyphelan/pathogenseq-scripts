@@ -166,7 +166,7 @@ sub calibrateAssembly{
 		$assembly{$n50} = $i;
 		$expCov{$i} = $exp_cov;
 		$covCut{$i} = $cov_cut;
-		print "$i\t$tempkmer\t$exp_cov\t$cov_cut\n";
+		print "$i\t$n50\t$exp_cov\t$cov_cut\n";
 	} 
 	
 	
