@@ -190,7 +190,7 @@ sub calibrateAssembly{
 	$kmer = ceil $newKmer;
 	$expCov = ceil $newExpCov;
 	$covCut = $newCovCut;
-	chdir("../")
+	chdir("../");
 	return($exp_cov,$cov_cut,$best);	
 
 }
