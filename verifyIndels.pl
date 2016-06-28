@@ -159,7 +159,7 @@ sub calibrateAssembly{
 	my %assembly;
 	my %expCov;
 	my %covCut;
-	for (my $i=49; $i<89; $i=$i+2){
+	for (my $i=$minKmer; $i<$maxKmer; $i=$i+2){
 		my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
 		$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
 		my ($exp_cov,$cov_cut,$tempkmer) = ($1,$2,$3);
