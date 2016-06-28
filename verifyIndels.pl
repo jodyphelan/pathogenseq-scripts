@@ -55,6 +55,8 @@ my $pwd = `pwd`;
 print $pwd;
 
 open KMER,">kmer.txt" or die;
+open EXPCOV, ">expCov.txt" or die;
+open COVCUT, ">covCut.txt" or die;
 open RESULTS, ">sv.results.txt" or die;
 open POS, "../indelGenes.positions.txt" or die;
 while(<POS>){
@@ -66,6 +68,8 @@ while(<POS>){
 	print "\n";
 
 	print KMER "$kmer\n";
+	print EXPCOV "$expCov\n";
+	print COVCUT "$covCut\n";
 	chomp;
 	my ($name,$chr,$start,$end,$minStart,$maxEnd) = (split /\s+/,$_);
 	my $regionStart = $start - 2000;
@@ -127,7 +131,8 @@ while(<POS>){
 close(POS);
 close RESULTS;
 close KMER;
-
+close EXPCOV;
+close COVCUT;
 
 #---------------------------------------------------------------------------
 #  Sub Routines
