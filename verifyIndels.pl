@@ -103,7 +103,7 @@ while(<POS>){
 	my $res = bwaAlign($ref,$start,$end);
 	if ($res eq "NA"){
 		print "Not possible to determine...Trying full assembly\n";
-		FULLlocalAssembly($base_dir,$sample,$chr,$regionStart,$regionEnd);
+		fullLocalAssembly($base_dir,$sample,$chr,$regionStart,$regionEnd);
 		$res = bwaAlign($ref,$start,$end);
 	}
 	if ($res eq "ABSENT"){
@@ -193,7 +193,88 @@ return("TRUE");
 #### end ####
 }
 
-sub FULLlocalAssembly{
+sub fullLocalAssembly{
+
+if (-e "contigs.fa"){
+    `rm -r *`;
+    print "Revmoing old run\n";
+}
+
+my ($base_dir,$sample,$chr,$start,$end) = @_;
+`sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
+`$velvetOpt --s $minKmer --e $maxKmer --x 2 -f '-shortPaired -bam filt.bam' 2>>err`;
+
+`velveth test $minKmer,$maxKmer,2 -shortPaired -bam filt.bam`;
+
+my %assembly;
+
+for (my $i=49; $i<89; $i=$i+2){
+	my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
+	$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
+	my ($exp_cov,$cov_cut,$tempkmer) = ($1,$2,$3);
+	$assembly{$res} = $i;
+	print "$i\t$tempkmer\t$exp_cov\t$cov_cut\n";
+} 
+
+
+
+my $best = (sort {$a<=>$b} keys %assembly)[0];
+`mv test$best k$best`;
+#`rm -r test*`;
+`ln -s k$best/contigs.fa .`;
+
+push @kmers,$best;
+push @expCov,$exp_cov;
+push @covCut,$cov_cut;	
+
+my $newCovCut = mean @covCut;
+my $newExpCov = mean @expCov;
+my $newKmer = mean @kmers;
+
+print "Reassigning kmer $kmer => ";
+$kmer = ceil $newKmer;
+$expCov = ceil $newExpCov;
+$covCut = $newCovCut;
+print "$kmer\n";
+
+
+
+
+}
+
+my $folder = `ls | grep auto`;
+chomp $folder;
+if (!-e "$folder/contigs.fa"){
+	print "Local assembly failed...Exiting\n"; exit;
+}
+`ln -s $folder/contigs.fa contigs.fa`;
+
+my $exp_cov = `tail -n20 *Log* | grep Velvetg | awk '{print \$8}'`;
+my $cov_cut = `tail -n20 *Log* | grep Velvetg |awk  '{print \$10}'`;
+my $tempkmer = `ls -d auto_data*`;
+chomp $tempkmer;
+$tempkmer =~ s/auto_data_//;
+chomp $exp_cov;
+chomp $cov_cut;
+push @kmers,$tempkmer;
+push @expCov,$exp_cov;
+push @covCut,$cov_cut;	
+
+my $newCovCut = mean @covCut;
+my $newExpCov = mean @expCov;
+my $newKmer = mean @kmers;
+
+print "Reassigning kmer $kmer => ";
+$kmer = ceil $newKmer;
+$expCov = ceil $newExpCov;
+$covCut = $newCovCut;
+print "$kmer\n";
+
+
+
+}
+
+sub OPTIMlocalAssembly{
 
 #### start #####
 if (-e "contigs.fa"){
