@@ -20,7 +20,7 @@
 
 use strict;
 use warnings;
-
+use Term::ProgressBar;
 
 if (scalar @ARGV != 2){ print "\nrecode.pl <prefix> <outfile>\n\n"; exit;}
 
@@ -34,6 +34,17 @@ while(<F>){
 close(F);
 print OUT "\n";
 
+
+my $totSNPs = `wc -l < $ARGV[0].tped`;
+chomp $totSNPs;
+my $progress = Term::ProgressBar->new({name => 'Converting', count => $totSNPs, remove => 1});
+$progress->minor(0);
+my $next_update = 0;
+my $x = 0;
+
+
+
+
 open F, "$ARGV[0].tped" or die;
 while(<F>){
 	chomp;
@@ -42,7 +53,7 @@ while(<F>){
 	$info =~ s/ /\t/g;
 	my ($chr,$id,$pos) = (split /\s+/, $info)[0,1,3];
 	print OUT "$chr\t$pos\t$id";
-	print "$chr $pos\n";
+#	print "$chr $pos\n";
 	$_ =~ s/0/NA/g;
 #	$_ =~ s/1/0/g;
 	$_ =~ s/2/0/g;
@@ -54,5 +65,17 @@ while(<F>){
 		print OUT "\t$gt";
 	}
 	print OUT "\n";
+
+	$x++;
+    if ($x >= $next_update){
+    	$next_update = $progress->update($x);
+    }
+
+
 }
 close(F);
+
+if ($x >= $next_update){
+	$next_update = $progress->update($x);
+
+}

@@ -208,8 +208,8 @@ if (!-e "$folder/contigs.fa"){
 }
 `ln -s $folder/contigs.fa contigs.fa`;
 
-my $exp_cov = `tail -n18 *Log* | head -1 | awk '{print \$8}'`;
-my $cov_cut = `tail -n18 *Log* | head -1 |awk  '{print \$10}'`;
+my $exp_cov = `tail -n20 *Log* | grep Velvetg | awk '{print \$8}'`;
+my $cov_cut = `tail -n20 *Log* | grep Velvetg |awk  '{print \$10}'`;
 my $tempkmer = `ls -d auto_data*`;
 chomp $tempkmer;
 $tempkmer =~ s/auto_data_//;
