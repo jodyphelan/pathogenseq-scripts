@@ -203,6 +203,9 @@ if (-e "contigs.fa"){
 my ($base_dir,$sample,$chr,$start,$end) = @_;
 `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
 
+`velveth test $minKmer,$maxKmer,2 -shortPaired -bam filt.bam`;
+
+
 my %assembly;
 my %expCov;
 my %covCut;
