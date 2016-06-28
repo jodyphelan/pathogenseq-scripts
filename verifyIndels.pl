@@ -202,9 +202,6 @@ if (-e "contigs.fa"){
 
 my ($base_dir,$sample,$chr,$start,$end) = @_;
 `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
-`$velvetOpt --s $minKmer --e $maxKmer --x 2 -f '-shortPaired -bam filt.bam' 2>>err`;
-
-`velveth test $minKmer,$maxKmer,2 -shortPaired -bam filt.bam`;
 
 my %assembly;
 
@@ -237,38 +234,6 @@ $expCov = ceil $newExpCov;
 $covCut = $newCovCut;
 print "$kmer\n";
 
-
-
-
-}
-
-my $folder = `ls | grep auto`;
-chomp $folder;
-if (!-e "$folder/contigs.fa"){
-	print "Local assembly failed...Exiting\n"; exit;
-}
-`ln -s $folder/contigs.fa contigs.fa`;
-
-my $exp_cov = `tail -n20 *Log* | grep Velvetg | awk '{print \$8}'`;
-my $cov_cut = `tail -n20 *Log* | grep Velvetg |awk  '{print \$10}'`;
-my $tempkmer = `ls -d auto_data*`;
-chomp $tempkmer;
-$tempkmer =~ s/auto_data_//;
-chomp $exp_cov;
-chomp $cov_cut;
-push @kmers,$tempkmer;
-push @expCov,$exp_cov;
-push @covCut,$cov_cut;	
-
-my $newCovCut = mean @covCut;
-my $newExpCov = mean @expCov;
-my $newKmer = mean @kmers;
-
-print "Reassigning kmer $kmer => ";
-$kmer = ceil $newKmer;
-$expCov = ceil $newExpCov;
-$covCut = $newCovCut;
-print "$kmer\n";
 
 
 
