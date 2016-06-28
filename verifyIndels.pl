@@ -182,7 +182,7 @@ if ($numReads < 1000){
 	return("FAIL");
 }
 `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
-`velveth k$kmer $kmer -shortPaired -bam filt.bam 2>> err; velvetg k$kmer -exp_cov $expCov -cov_cutoff $covCut 2>> err`;
+`velveth k$kmer $kmer -shortPaired -bam filt.bam 2>> err; velvetg k$kmer -exp_cov $expCov -cov_cutoff $covCut -very_clean yes 2>> err`;
 my $folder = `ls | grep ^k`;
 chomp $folder;
 if (!-e "$folder/contigs.fa"){
