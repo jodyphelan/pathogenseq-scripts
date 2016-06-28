@@ -162,15 +162,16 @@ sub calibrateAssembly{
 	for (my $i=$minKmer; $i<$maxKmer; $i=$i+2){
 		my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
 		$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
-		my ($exp_cov,$cov_cut,$tempkmer) = ($1,$2,$3);
-		$assembly{$res} = $i;
+		my ($exp_cov,$cov_cut,$n50) = ($1,$2,$3);
+		$assembly{$n50} = $i;
 		$expCov{$i} = $exp_cov;
 		$covCut{$i} = $cov_cut;
 		print "$i\t$tempkmer\t$exp_cov\t$cov_cut\n";
 	} 
 	
 	
-	my $best = (sort {$a<=>$b} keys %assembly)[0];
+	my $bestn50 = (sort {$a<=>$b} keys %assembly)[0];
+	my $best = $assembly{$bestn50};
 	`mv test$best k$best`;
 	#`rm -r test*`;
 	`ln -s k$best/contigs.fa .`;
