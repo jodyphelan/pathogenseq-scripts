@@ -129,7 +129,7 @@ while(<POS>){
 			die;
 		}
 	}
-#	sam2graph($chr,$regionStart,$regionEnd,$start,$end);	
+	sam2graph($chr,$regionStart,$regionEnd,$start,$end);	
 	chdir("../");
 }
 close(POS);
