@@ -170,7 +170,7 @@ sub calibrateAssembly{
 	} 
 	
 	
-	my $bestn50 = (sort {$a<=>$b} keys %assembly)[0];
+	my $bestn50 = (sort {$b<=>$a} keys %assembly)[0];
 	my $best = $assembly{$bestn50};
 	`mv test_$best k$best`;
 	#`rm -r test*`;
@@ -252,7 +252,7 @@ my ($base_dir,$sample,$chr,$start,$end) = @_;
 	} 
 	
 	
-	my $bestn50 = (sort {$a<=>$b} keys %assembly)[0];
+	my $bestn50 = (sort {$b<=>$a} keys %assembly)[0];
 	my $best = $assembly{$bestn50};
 	`mv test_$best k$best`;
 	#`rm -r test*`;
@@ -350,7 +350,7 @@ my @hits;
 for( keys %hits){
 	if ($hits{$_} >1){
 		push @hits,$_;
-		print "Analysing $_ further\n";
+#		print "Analysing $_ further\n";
 	}
 }
 
@@ -416,7 +416,7 @@ for (my $i=0; $i<$#agehits; $i++){
 		print "FAIL assembly quality\n";
 		next;
 	}
-	print "$hitName\t$identity\t$indelsize\t$bp1-$bp2\t$flank1start\t$flank1end\t$flank2start\t$flank2end\n";
+#	print "$hitName\t$identity\t$indelsize\t$bp1-$bp2\t$flank1start\t$flank1end\t$flank2start\t$flank2end\n";
 	my $flank1Len = abs($flank1end-$flank1start);
 	my $flank2Len = abs($flank2end-$flank2start);
 	if ($flank1Len < $minFlankSize or $flank2Len <$minFlankSize or $identity <$minID){
@@ -526,7 +526,7 @@ while(<F>){
 		$m += $_;
 	}
 	my $end = $start+$m;
-	print "$contig\t$chr\t$start\t$m\n";
+#	print "$contig\t$chr\t$start\t$m\n";
 	for (my $i = $start; $i<=$end; $i++){
 		$contigs{$contig}{$i}++;
 	}
@@ -542,7 +542,7 @@ foreach my $contig (keys %contigs){
 			$delCover ++;
 		}
 	}
-	print "\n\n$contig\t$delLen\t$delCover\n";
+#	print "\n\n$contig\t$delLen\t$delCover\n";
 	if ($delLen eq $delCover){return("ABSENT");}
 	
 	my $flank1Start = $bp1 - 50;
@@ -565,7 +565,7 @@ foreach my $contig (keys %contigs){
 	}
 	my $flank1CoverPCT = $flank1Cover/50;
 	my $flank2CoverPCT = $flank2Cover/50;
-	print "$contig\t$flank1CoverPCT\t$flank2CoverPCT\n";
+#	print "$contig\t$flank1CoverPCT\t$flank2CoverPCT\n";
 	if ($flank1CoverPCT>0.50 && $flank2CoverPCT>0.50){return("POSSIBLE")}
 }
 return("NA");
