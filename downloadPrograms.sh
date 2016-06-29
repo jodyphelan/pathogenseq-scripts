@@ -1,6 +1,6 @@
 #! /bin/bash
 wget http://pathogenseq.lshtm.ac.uk/downloads/files.tar.gz
-
+tar -xvf files.tar.gz
 
 ### VCFTOOLS.PL
 #wget https://raw.githubusercontent.com/lh3/samtools/master/bcftools/vcfutils.pl
