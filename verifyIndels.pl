@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 use Cwd 'abs_path';
+use Cwd;
 use Statistics::Lite qw(:all);
 use POSIX;
 
@@ -39,7 +40,9 @@ $ref = abs_path($ref);
 my $sample = $ARGV[0];
 my $base_dir = $ARGV[1];
 $base_dir = abs_path($base_dir);
-my $samtools = "/usr/local/src/samtools-1.2/samtools";
+my $script_dir = abs_path($0);
+$script_dir =~ s/verifyIndels.pl//;
+my $samtools = "$script_dir/samtools-1.3.1/samtools";
 my $velvetOpt = "/usr/local/src/VelvetOptimiser-2.2.5/VelvetOptimiser.pl";
 
 my $r1 = parseDelly($sample,$base_dir); 
