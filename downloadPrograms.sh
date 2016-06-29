@@ -1,4 +1,4 @@
-! /bin/bash
+#! /bin/bash
 wget http://pathogenseq.lshtm.ac.uk/downloads/files.tar.gz
 
 
