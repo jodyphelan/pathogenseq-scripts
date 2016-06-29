@@ -172,7 +172,7 @@ sub calibrateAssembly{
 	
 	my $bestn50 = (sort {$a<=>$b} keys %assembly)[0];
 	my $best = $assembly{$bestn50};
-	`mv test$best k$best`;
+	`mv test_$best k$best`;
 	#`rm -r test*`;
 	`ln -s k$best/contigs.fa .`;
 
