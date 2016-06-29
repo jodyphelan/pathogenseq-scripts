@@ -234,45 +234,46 @@ if (-e "contigs.fa"){
 my ($base_dir,$sample,$chr,$start,$end) = @_;
 `sambamba view -F "not (unmapped or mate_is_unmapped) and mapping_quality >=30" -o filt.bam $base_dir/bam/$sample.bam $chr:$start-$end -f bam`;
 
+
 `velveth test $minKmer,$maxKmer,2 -shortPaired -bam filt.bam`;
+	
+	
+	my %assembly;
+	my %expCov;
+	my %covCut;
+	for (my $i=$minKmer; $i<$maxKmer; $i=$i+2){
+		my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
+		$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
+		my ($exp_cov,$cov_cut,$n50) = ($1,$2,$3);
+		$assembly{$n50} = $i;
+		$expCov{$i} = $exp_cov;
+		$covCut{$i} = $cov_cut;
+		print "$i\t$n50\t$exp_cov\t$cov_cut\n";
+	} 
+	
+	
+	my $bestn50 = (sort {$a<=>$b} keys %assembly)[0];
+	my $best = $assembly{$bestn50};
+	`mv test_$best k$best`;
+	#`rm -r test*`;
+	`ln -s k$best/contigs.fa .`;
 
-
-my %assembly;
-my %expCov;
-my %covCut;
-for (my $i=49; $i<89; $i=$i+2){
-	my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
-	$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
-	my ($exp_cov,$cov_cut,$tempkmer) = ($1,$2,$3);
-	$assembly{$res} = $i;
-	$expCov{$i} = $exp_cov;
-	$covCut{$i} = $cov_cut;
-	print "$i\t$tempkmer\t$exp_cov\t$cov_cut\n";
-} 
-
-
-my $best = (sort {$a<=>$b} keys %assembly)[0];
-`mv test$best k$best`;
-#`rm -r test*`;
-`ln -s k$best/contigs.fa .`;
-
-my $exp_cov = $expCov{$best};
-my $cov_cut = $covCut{$best};
-
-
-push @kmers,$best;
-push @expCov,$exp_cov;
-push @covCut,$cov_cut;	
-
-my $newCovCut = mean @covCut;
-my $newExpCov = mean @expCov;
-my $newKmer = mean @kmers;
-
-print "Reassigning kmer $kmer => ";
-$kmer = ceil $newKmer;
-$expCov = ceil $newExpCov;
-$covCut = $newCovCut;
-print "$kmer\n";
+	my $exp_cov = $expCov{$best};
+	my $cov_cut = $covCut{$best};
+	
+	
+	push @kmers,$best;
+	push @expCov,$exp_cov;
+	push @covCut,$cov_cut;	
+	
+	my $newCovCut = mean @covCut;
+	my $newExpCov = mean @expCov;
+	my $newKmer = mean @kmers;
+	print "Reassigning kmer $kmer => ";
+	$kmer = ceil $newKmer;
+	$expCov = ceil $newExpCov;
+	$covCut = $newCovCut;
+	print "$kmer\n";
 
 
 
