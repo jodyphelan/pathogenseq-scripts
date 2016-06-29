@@ -15,7 +15,7 @@ unzip Trimmomatic-0.36.zip
 ln -s Trimmomatic-0.36/trimmomatic-0.36.jar trimmomatic.jar
 
 ### GEM
-wget http://iweb.dl.sourceforge.net/project/gemlibrary/gem-library/Binary%20pre-release%203/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2 
+wget http://pathogenseq.lshtm.ac.uk/downloads/GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2 
 tar -xvf GEM-binaries-Linux-x86_64-core_i3-20130406-045632.tbz2 
 ln -s GEM-binaries-Linux-x86_64-core_i3-20130406-045632/bin/gem* .
 
