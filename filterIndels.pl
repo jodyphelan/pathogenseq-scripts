@@ -34,7 +34,7 @@ my $outfile = $ARGV[3];
 $baseDir = abs_path($baseDir);
 $refFile = abs_path($refFile);
 
-parseVCF($sampleFile,$baseDir);
+#parseVCF($sampleFile,$baseDir);
 
 my $err = `cat $sampleFile | xargs -i -P20 sh -c "verifyIndels.pl {} $baseDir $refFile"`;
 print  $err;
