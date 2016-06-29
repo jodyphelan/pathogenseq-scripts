@@ -83,6 +83,7 @@ while(<POS>){
 			$start = $delly{$_}{'start'};
 			$end = $delly{$_}{'end'};
 			$dellyPresent ++;
+			last;
 		} 
 	}	
 	if ($dellyPresent == 0){
