@@ -80,6 +80,7 @@ while(<POS>){
 
 	my $dellyPresent = 0;
 	for (@dellyIndelNo){
+		print "$delly{$_}{'start'} < $start && $delly{$_}{'end'} > $end\n";
 		if ($delly{$_}{'start'} < $start && $delly{$_}{'end'} > $end){
 			print "Reassigning coordinates based on sample specific delly call:\n\t$start => $delly{$_}{'start'}\n\t$end => $delly{$_}{'end'}\n";
 			$start = $delly{$_}{'start'};
