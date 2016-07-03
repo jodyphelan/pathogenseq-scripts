@@ -57,6 +57,7 @@ while (<F>){
 #	print "Loading position $pos\n";
 	my $ref = shift @a;
 	for (my $j = 0; $j<=$#a; $j++){
+		if (length($a[$j]) > 1){$a[$j] = "N";}
 		if ($a[$j] eq "-"){$a[$j] = "N";}
 		$seqs{$j}{"seq"} .= $a[$j];
 	}

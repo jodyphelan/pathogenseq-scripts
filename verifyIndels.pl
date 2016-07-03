@@ -25,7 +25,7 @@ use Cwd;
 use Statistics::Lite qw(:all);
 use POSIX;
 
-if ($#ARGV+1 < 3){print "\nverifyIndels.pl <sample> <base_dir> <ref>\n\n"; exit;}
+if ($#ARGV+1 < 4){print "\nverifyIndels.pl <sample> <base_dir> <ref> <careful|fast>\n\n"; exit;}
 
 my $minKmer = 49;
 my $maxKmer = 79;
@@ -39,6 +39,12 @@ my $ref = $ARGV[2];
 $ref = abs_path($ref);
 my $sample = $ARGV[0];
 my $base_dir = $ARGV[1];
+my $alg = $ARGV[3];
+
+if ($alg ne "careful" and $alg ne "fast"){
+	print "Algorithm must be careful or fast\n";
+}
+
 $base_dir = abs_path($base_dir);
 my $script_dir = abs_path($0);
 $script_dir =~ s/verifyIndels.pl//;
@@ -107,9 +113,18 @@ while(<POS>){
 	}
 	my $res = bwaAlign($ref,$start,$end);
 	if ($res eq "NA"){
-		print "Not possible to determine...Trying full assembly\n";
-		fullLocalAssembly($base_dir,$sample,$chr,$regionStart,$regionEnd);
-		$res = bwaAlign($ref,$start,$end);
+		if ($alg eq "careful"){
+			print "Not possible to determine...Trying full assembly\n";
+			fullLocalAssembly($base_dir,$sample,$chr,$regionStart,$regionEnd);
+			$res = bwaAlign($ref,$start,$end);
+		} else {
+			print RESULTS "\tABSENT\n";
+			print "Indel absent\n";
+			`echo "NO INDELS" > results.txt`;
+			sam2graph($chr,$regionStart,$regionEnd,$start,$end);
+			chdir("../");
+			next;
+		}
 	}
 	if ($res eq "ABSENT"){
 		print RESULTS "\tABSENT\n";
@@ -120,16 +135,21 @@ while(<POS>){
 		print RESULTS "\tNA\n";
 		`echo "NO CONTIGS COVERING" > results.txt`
 	} else {	
-		print "Possible indel...runing AGE\n";
-		my $ageResult = ageAlign($ref,$chr,$regionStart,$regionEnd,$minFlankSize,$minID);
-		if ($ageResult eq "NA"){
-			print RESULTS "\tMAYBE\n";
-		} elsif ($ageResult eq "PRESENT"){
-			print RESULTS "\tPRESENT\n";
+		if ($alg eq "careful"){
+			print "Possible indel...runing AGE\n";
+			my $ageResult = ageAlign($ref,$chr,$regionStart,$regionEnd,$minFlankSize,$minID);
+			if ($ageResult eq "NA"){
+				print RESULTS "\tMAYBE\n";
+			} elsif ($ageResult eq "PRESENT"){
+				print RESULTS "\tPRESENT\n";
+			} else {
+				die;
+			}
 		} else {
-			die;
+			print RESULTS "\tPRESENT\n";
 		}
 	}
+
 	sam2graph($chr,$regionStart,$regionEnd,$start,$end);	
 	chdir("../");
 }
