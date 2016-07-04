@@ -276,6 +276,9 @@ my ($base_dir,$sample,$chr,$start,$end) = @_;
 	for (my $i=$minKmer; $i<$maxKmer; $i=$i+2){
 		my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
 		$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
+		if ($res =~ /EMPTY/){
+            next;
+        }
 		my ($exp_cov,$cov_cut,$n50) = ($1,$2,$3);
 		$assembly{$n50} = $i;
 		$expCov{$i} = $exp_cov;
