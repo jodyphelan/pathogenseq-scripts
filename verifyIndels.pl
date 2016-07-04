@@ -60,7 +60,7 @@ chdir("$sample");
 
 our ($expCov,$covCut,$kmer) = calibrateAssembly($base_dir,$sample,"Chromosome",20000,30000);
 print "Expected coverage:$expCov\tCoverage cutoff:$covCut\tKmer:$kmer\n";
-exit;
+
 my $pwd = `pwd`;
 print $pwd;
 
