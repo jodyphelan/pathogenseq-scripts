@@ -55,6 +55,9 @@ my $velvetOpt = "/usr/local/src/VelvetOptimiser-2.2.5/VelvetOptimiser.pl";
 my $r1 = parseDelly($sample,$base_dir); 
 my %delly = %{$r1};
 my @dellyIndelNo = sort {$a<=>$b} keys %delly;
+if (-d "$sample"){
+	print "$sample exists\n"; exit;
+}
 `mkdir $sample`; 
 chdir("$sample");
 
