@@ -43,6 +43,7 @@ my $alg = $ARGV[3];
 
 if ($alg ne "careful" and $alg ne "fast"){
 	print "Algorithm must be careful or fast\n";
+	exit;
 }
 
 $base_dir = abs_path($base_dir);

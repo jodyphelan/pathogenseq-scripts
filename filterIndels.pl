@@ -25,18 +25,27 @@ use Cwd 'abs_path';
 
 
 
-if ($#ARGV+1 < 4){print "\nfilterIndels.pl <sample file> <base_dir> <reference> <outfile>\n\n"; exit;}
+if ($#ARGV+1 < 5){print "\nfilterIndels.pl <sample file> <base_dir> <reference> <outfile> <fast|careful>\n\n"; exit;}
 
 my $sampleFile = $ARGV[0];
 my $baseDir = $ARGV[1];
 my $refFile = $ARGV[2];
 my $outfile = $ARGV[3];
+my $alg = $ARGV[4];
+
+if ($alg ne "careful" and $alg ne "fast"){
+    print "Algorithm must be careful or fast\n";
+    exit;
+}
+
+
+ 
 $baseDir = abs_path($baseDir);
 $refFile = abs_path($refFile);
 
-#parseVCF($sampleFile,$baseDir);
+parseVCF($sampleFile,$baseDir);
 
-my $err = `cat $sampleFile | xargs -i -P20 sh -c "verifyIndels.pl {} $baseDir $refFile"`;
+my $err = `cat $sampleFile | xargs -i -P20 sh -c "verifyIndels.pl {} $baseDir $refFile $alg"`;
 print  $err;
 parseAssemblyResults($sampleFile);
 
