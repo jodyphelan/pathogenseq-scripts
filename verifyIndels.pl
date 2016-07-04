@@ -27,7 +27,7 @@ use POSIX;
 
 if ($#ARGV+1 < 4){print "\nverifyIndels.pl <sample> <base_dir> <ref> <careful|fast>\n\n"; exit;}
 
-my $minKmer = 29;
+my $minKmer = 19;
 my $maxKmer = 79;
 my @kmers;
 my @expCov;
@@ -187,6 +187,9 @@ sub calibrateAssembly{
 	my %covCut;
 	for (my $i=$minKmer; $i<$maxKmer; $i=$i+2){
 		my $res = `velvetg test_$i -cov_cutoff auto -exp_cov auto -clean yes| tail -3 | tr '\n' ' '`;
+		if ($res =~ /EMPTY/){
+			next;
+		}
 		$res =~ m/Estimated Coverage = ([\d\.]+).+Estimated Coverage cutoff = ([\d\.]+).+n50 of (\d+)/;
 		my ($exp_cov,$cov_cut,$n50) = ($1,$2,$3);
 		$assembly{$n50} = $i;
