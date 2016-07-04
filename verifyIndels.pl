@@ -87,7 +87,7 @@ while(<POS>){
 	my ($name,$chr,$start,$end,$minStart,$maxEnd) = (split /\s+/,$_);
 	my $regionStart = $start - 2000;
 	my $regionEnd = $end + 2000;
-
+	if ($regionStart<0){$regionStart=1;}
 	my $dellyPresent = 0;
 	for (@dellyIndelNo){
 #		print "$delly{$_}{'start'} < $start && $delly{$_}{'end'} > $end\n";
