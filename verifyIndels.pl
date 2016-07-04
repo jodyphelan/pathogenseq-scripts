@@ -27,7 +27,7 @@ use POSIX;
 
 if ($#ARGV+1 < 4){print "\nverifyIndels.pl <sample> <base_dir> <ref> <careful|fast>\n\n"; exit;}
 
-my $minKmer = 49;
+my $minKmer = 29;
 my $maxKmer = 79;
 my @kmers;
 my @expCov;
