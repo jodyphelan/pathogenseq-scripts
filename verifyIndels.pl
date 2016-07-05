@@ -89,16 +89,16 @@ while(<POS>){
 	my $regionEnd = $end + 2000;
 	if ($regionStart<0){$regionStart=1;}
 	my $dellyPresent = 0;
-	for (@dellyIndelNo){
-		print "$delly{$_}{'start'} > $start && $delly{$_}{'end'} < $end\n";
-		if ($delly{$_}{'start'} > $start && $delly{$_}{'end'} < $end){
-			print "Reassigning coordinates based on sample specific delly call:\n\t$start => $delly{$_}{'start'}\n\t$end => $delly{$_}{'end'}\n";
-			$start = $delly{$_}{'start'};
-			$end = $delly{$_}{'end'};
-			$dellyPresent ++;
-			last;
-		} 
-	}	
+#	for (@dellyIndelNo){
+#		print "$delly{$_}{'start'} > $start && $delly{$_}{'end'} < $end\n";
+#		if ($delly{$_}{'start'} > $start && $delly{$_}{'end'} < $end){
+#			print "Reassigning coordinates based on sample specific delly call:\n\t$start => $delly{$_}{'start'}\n\t$end => $delly{$_}{'end'}\n";
+#			$start = $delly{$_}{'start'};
+#			$end = $delly{$_}{'end'};
+#			$dellyPresent ++;
+#			last;
+#		} 
+#	}	
 	if ($dellyPresent == 0){
 		print "Reassigning coordinates based on maximum possible delly call:\n\t$start => $minStart\n\t$end => $maxEnd\n";
 		$start = $minStart;
