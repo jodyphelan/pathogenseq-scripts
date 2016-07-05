@@ -122,8 +122,8 @@ while(<POS>){
 			fullLocalAssembly($base_dir,$sample,$chr,$regionStart,$regionEnd);
 			$res = bwaAlign($ref,$start,$end);
 		} else {
-			print RESULTS "\tABSENT\n";
-			print "Indel absent\n";
+			print RESULTS "\tNA\n";
+			print "Not possible to determine\n";
 			`echo "NO INDELS" > results.txt`;
 			sam2graph($chr,$regionStart,$regionEnd,$start,$end);
 			chdir("../");
