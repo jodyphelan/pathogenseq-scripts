@@ -41,7 +41,6 @@ while(<F>){
 	my $chr = shift @a;
 	my $pos = shift @a;
 	my $ref = shift @a;
-	print "$pos\n";
 	print OUT "$chr\t$pos\t$ref";
 	for (my $i=0; $i<=$#a; $i++){
 		if ($a[$i] eq "-" || $a[$i] eq "N"){
