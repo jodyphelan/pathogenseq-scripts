@@ -26,18 +26,33 @@ my $matFile;
 my $annFile;
 my $threads;
 my $rerun;
+my $png;
+my $k = 5;
 GetOptions(
 	'mat|m=s' => \$matFile,
 	'ann|a=s' => \$annFile,
 	'threads|t=s' => \$threads,
 	'rerun|r' => \$rerun,
+	'png|p' => \$png,
+	'num|k=s' => \$k,
+	
 ) or die "\nsnpMatrix2pca.pl -m <mat.bin> -a <ann> -t <threads> (--rerun)\n\n";
 
+my $usage = '	
+snpMatrix2pca.pl
+	
+	--mat|-m 		Binary SNP matrix
+	--ann|-a 		Annotation
+	--threads|-t		Threads	
+	--rerun|-r		Skip distance calculation
+	--png|-p		Generate png plot
+	--num|-k		Number of principal components to analyse
 
+';
 
 if (!$rerun){
 	if (!$matFile or !$annFile or !$threads){
-		print "\nsnpMatrix2pca.pl -m <mat.bin> -a <ann> -t <threads> (--rerun)\n\n";
+		print $usage;
 		exit;
 	}
 	init_pca();
@@ -67,15 +82,23 @@ meta$col<-rep("NA",dim(meta)[1])
 for (l in temp){meta$col[which(meta$V2==l)]<-rainbow(length(temp))[match(l,temp)]}
 pcaPlot<-function(x,y){plot(results.pca$points[,x], results.pca$points[,y], col=meta$col, pch=20, xlab=paste("PC",x," (",vars[x],"%)",sep=""),ylab=paste("PC",y," (",vars[y],"%)", sep=""))}
 x11()
+';
 
-for (i in 1:9){
+print OUT "for (i in 1:$k){\n";
+print OUT '
 	pcaPlot(i,i+1)
 	loc<-locator(1)
 	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
-	png(paste("PC",i,"vPC",i+1,".png",sep=""),800,600)
+	';
+
+if ($png){
+	print OUT "png(paste(\"$png\",i,\"v\",i+1,\".png\",sep=\"\"))
 	pcaPlot(i,i+1)
-	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
+	legend(loc\$x,loc\$y,fill=rainbow(length(temp)),legend=temp)
 	dev.off()
+	";
+}
+print OUT '
 locator(1)
 }
 
@@ -118,15 +141,22 @@ meta$col<-rep("NA",dim(meta)[1])
 for (l in temp){meta$col[which(meta$V2==l)]<-rainbow(length(temp))[match(l,temp)]}
 pcaPlot<-function(x,y){plot(results.pca$points[,x], results.pca$points[,y], col=meta$col, pch=20, xlab=paste("PC",x," (",vars[x],"%)",sep=""),ylab=paste("PC",y," (",vars[y],"%)", sep=""))}
 x11()
+';
 
-for (i in 1:9){
+print OUT "for (i in 1:$k){\n";
+print OUT '
 	pcaPlot(i,i+1)
 	loc<-locator(1)
 	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
-	png(paste("PC",i,"vPC",i+1,".png",sep=""))
+';
+if ($png){
+	print OUT "png(paste(\"$png\",i,\"v\",i+1,\".png\",sep=\"\"))
 	pcaPlot(i,i+1)
-	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
+	legend(loc\$x,loc\$y,fill=rainbow(length(temp)),legend=temp)
 	dev.off()
+	";
+}
+print OUT '
 locator(1)
 }
 
