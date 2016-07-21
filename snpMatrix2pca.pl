@@ -28,14 +28,15 @@ my $threads;
 my $rerun;
 my $png;
 my $k = 5;
+my $help;
 GetOptions(
 	'mat|m=s' => \$matFile,
 	'ann|a=s' => \$annFile,
 	'threads|t=s' => \$threads,
 	'rerun|r' => \$rerun,
-	'png|p' => \$png,
+	'png|p=s' => \$png,
 	'num|k=s' => \$k,
-	
+	'help|h' => \$help,
 ) or die "\nsnpMatrix2pca.pl -m <mat.bin> -a <ann> -t <threads> (--rerun)\n\n";
 
 my $usage = '	
@@ -47,8 +48,13 @@ snpMatrix2pca.pl
 	--rerun|-r		Skip distance calculation
 	--png|-p		Generate png plot
 	--num|-k		Number of principal components to analyse
+	--help|-h		Show this message
 
 ';
+
+if ($help){
+	print $usage; exit;
+}
 
 if (!$rerun){
 	if (!$matFile or !$annFile or !$threads){
@@ -92,7 +98,7 @@ print OUT '
 	';
 
 if ($png){
-	print OUT "png(paste(\"$png\",i,\"v\",i+1,\".png\",sep=\"\"))
+	print OUT "png(paste(\"${png}_\",i,\"v\",i+1,\".png\",sep=\"\"))
 	pcaPlot(i,i+1)
 	legend(loc\$x,loc\$y,fill=rainbow(length(temp)),legend=temp)
 	dev.off()
@@ -150,7 +156,7 @@ print OUT '
 	legend(loc$x,loc$y,fill=rainbow(length(temp)),legend=temp)
 ';
 if ($png){
-	print OUT "png(paste(\"$png\",i,\"v\",i+1,\".png\",sep=\"\"))
+	print OUT "png(paste(\"${png}_\",i,\"v\",i+1,\".png\",sep=\"\"))
 	pcaPlot(i,i+1)
 	legend(loc\$x,loc\$y,fill=rainbow(length(temp)),legend=temp)
 	dev.off()
