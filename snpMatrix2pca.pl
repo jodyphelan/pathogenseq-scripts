@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#	  FILE:  snpMatrix2pca.pl
-#
-#	 USAGE:  ./snpMatrix2pca.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#	  BUGS:  ---
-#	 NOTES:  ---
-#	AUTHOR:  Jody Phelan (JP), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  04/11/2016 05:17:58 PM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

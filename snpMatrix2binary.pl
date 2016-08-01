@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  bigSnpMatrix2binary.pl
-#
-#        USAGE:  ./bigSnpMatrix2binary.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Dr. Fritz Mehner (mn), mehner@fh-swf.de
-#      COMPANY:  FH Südwestfalen, Iserlohn
-#      VERSION:  1.0
-#      CREATED:  01/12/15 17:40:41
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

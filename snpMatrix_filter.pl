@@ -1,23 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  snpMatrix_filter.pl
-#
-#        USAGE:  ./snpMatrix_filter.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  06/17/2016 02:32:22 PM
-#     REVISION:  ---
-#===============================================================================
-
 use strict;
 use warnings;
 use Term::ProgressBar;

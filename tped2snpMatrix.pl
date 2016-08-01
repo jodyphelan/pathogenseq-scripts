@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  recode.pl
-#
-#        USAGE:  ./recode.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  04/07/2016 10:25:02 AM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

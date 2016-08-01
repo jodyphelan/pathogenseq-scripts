@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  snpMatrix2fst.pl
-#
-#        USAGE:  ./snpMatrix2fst.pl  
-#
-#  DESCRIPTION: FST WEIR 
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  04/12/2016 12:31:27 PM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  snpMatrix2fasta.pl
-#
-#        USAGE:  ./snpMatrix2fasta.pl  
-#
-#  DESCRIPTION:  convert snp_matrix to fasta file
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (JP), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  02/17/2015 04:56:12 PM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

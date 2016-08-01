@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  bigSnpMatrix_subset.pl
-#
-#        USAGE:  ./bigSnpMatrix_subset.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Dr. Fritz Mehner (mn), mehner@fh-swf.de
-#      COMPANY:  FH Südwestfalen, Iserlohn
-#      VERSION:  1.0
-#      CREATED:  12/02/2015 01:19:42 PM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

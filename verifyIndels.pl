@@ -1,23 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#		 FILE:  verifyIndels.pl
-#
-#		USAGE:  ./verifyIndels.pl  
-#
-#  DESCRIPTION:  
-#
-#	  OPTIONS:  ---
-# REQUIREMENTS:  ---
-#		 BUGS:  ---
-#		NOTES:  ---
-#	   AUTHOR:  Jody Phelan (JP), jody.phelan@lshtm.ac.uk
-#	  COMPANY:  LSHTM
-#	  VERSION:  1.0
-#	  CREATED:  06/23/2016 03:14:31 PM
-#	 REVISION:  ---
-#===============================================================================
-
 use strict;
 use warnings;
 use Cwd 'abs_path';

@@ -1,22 +1,5 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  snpMatrix_removeMulti.pl
-#
-#        USAGE:  ./snpMatrix_removeMulti.pl  
-#
-#  DESCRIPTION:  remove multi calls from a snp matrix
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  03/31/2015 12:13:23 PM
-#     REVISION:  ---
-#===============================================================================
+
 
 use strict;
 use warnings;

@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  snpMatrix2genome.pl
-#
-#        USAGE:  ./snpMatrix2genome.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  08/12/2015 12:04:18 PM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;

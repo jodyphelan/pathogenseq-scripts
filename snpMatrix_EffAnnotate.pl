@@ -1,23 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#	 FILE:  snpMatrix_EffAnnotate.pl
-#
-#	USAGE:  ./snpMatrix_EffAnnotate.pl  
-#
-#  DESCRIPTION:  
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#	 BUGS:  ---
-#	NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  06/09/2015 02:16:01 PM
-#     REVISION:  ---
-#===============================================================================
-
 use strict;
 use warnings;
 

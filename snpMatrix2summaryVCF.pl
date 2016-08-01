@@ -1,22 +1,4 @@
 #!/usr/bin/perl 
-#===============================================================================
-#
-#         FILE:  snpMatrix2summaryVCF.pl
-#
-#        USAGE:  ./snpMatrix2summaryVCF.pl  
-#
-#  DESCRIPTION: convert a snp matrix to summary vcf one line per snp 
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  Jody Phelan (mn), jody.phelan@lshtm.ac.uk
-#      COMPANY:  LSHTM
-#      VERSION:  1.0
-#      CREATED:  03/27/2015 10:58:48 AM
-#     REVISION:  ---
-#===============================================================================
 
 use strict;
 use warnings;
