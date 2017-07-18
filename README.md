@@ -12,7 +12,7 @@
 
 #### Perl modules:
 * Statistics::Lite<br>
-* Term::ProgresBar
+* Term::ProgressBar
 
 These programs and perl modules must be installed for full functionality of the pipeline. Additionally the following programs and scripts much also be added to the path, however we provide a script to download the latest versions:<br>
 * trimmomatic<br>
