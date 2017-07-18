@@ -25,15 +25,17 @@ while(<F>){
 	my $ref = shift @a;
 	print OUT "$chr\t$pos\t$ref";
 	for (my $i=0; $i<=$#a; $i++){
-		if ($a[$i] eq "-" || $a[$i] eq "N"){
-			print OUT "\tNA";
-		} elsif ($a[$i] eq $ref){
-			print OUT "\t0";
-		} elsif ($a[$i] ne $ref){
-			print OUT "\t1";
-		} else {
-			die;
-		}
+                if ($a[$i] eq "-" || $a[$i] eq "N"){
+                        print OUT "\tNA";
+                } elsif ($a[$i] eq $ref){
+                        print OUT "\t0";
+                } elsif (length($a[$i]) >1){
+                        print OUT "\t0.5";
+                } elsif ($a[$i] ne $ref){
+                        print OUT "\t1";
+                } else {
+                        die;
+                }
 	}
 	print OUT "\n";
 	$x++;
